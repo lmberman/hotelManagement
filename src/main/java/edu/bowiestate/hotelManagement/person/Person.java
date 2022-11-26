@@ -13,7 +13,7 @@ public class Person {
     @TableGenerator(name = "Person_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 5, allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Person_Gen")
     @Column(name="PERSON_ID")
-    private long personId;
+    private Long personId;
 
     @Column(name="FIRSTNAME")
     private String firstname;
@@ -22,7 +22,7 @@ public class Person {
     private char middle;
 
     @Column(name="LASTNAME")
-    private char lastname;
+    private String lastname;
 
     @Column(name = "TELEPHONE", length = 12)
     private String telephone;
@@ -39,11 +39,11 @@ public class Person {
     @Column(name = "ZIP")
     private String zip;
 
-    public long getPersonId() {
+    public Long getPersonId() {
         return personId;
     }
 
-    public void setPersonId(long personId) {
+    public void setPersonId(Long personId) {
         this.personId = personId;
     }
 
@@ -63,11 +63,11 @@ public class Person {
         this.middle = middle;
     }
 
-    public char getLastname() {
+    public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(char lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 

@@ -33,6 +33,30 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<HouseKeepTask> houseKeepTasks;
 
+    public long getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(long roomNum) {
+        this.roomNum = roomNum;
+    }
+
+    public RoomType getType() {
+        return type;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type;
+    }
+
+    public RoomStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RoomStatus status) {
+        this.status = status;
+    }
+
     public enum RoomType{
         SINGLE("Single"),
         DOUBLE("Double"),

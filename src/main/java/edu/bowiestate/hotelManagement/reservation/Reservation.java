@@ -44,8 +44,80 @@ public class Reservation {
     @Column(name="STATUS")
     private ReservationStatus status;
 
-    private enum ReservationStatus {
-        OPEN,CLOSED,CANCELLED
+    public long getConfirmNum() {
+        return confirmNum;
+    }
+
+    public void setConfirmNum(long confirmNum) {
+        this.confirmNum = confirmNum;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isPriceLocked() {
+        return priceLocked;
+    }
+
+    public void setPriceLocked(boolean priceLocked) {
+        this.priceLocked = priceLocked;
+    }
+
+    public boolean isDoNotDisturb() {
+        return doNotDisturb;
+    }
+
+    public void setDoNotDisturb(boolean doNotDisturb) {
+        this.doNotDisturb = doNotDisturb;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
+    }
+
+    enum ReservationStatus {
+        OPEN, IN_PROGRESS, CLOSED, CANCELLED
     }
 
 }

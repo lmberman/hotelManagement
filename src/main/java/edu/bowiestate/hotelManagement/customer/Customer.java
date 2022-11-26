@@ -14,8 +14,6 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @TableGenerator(name = "Cust_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 1, allocationSize = 100)
-    @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Cust_Gen")
     @Column(name="CUST_ID")
     private long custId;
 
