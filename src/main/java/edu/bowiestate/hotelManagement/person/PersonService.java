@@ -1,4 +1,4 @@
-package edu.bowiestate.hotelManagement.Person;
+package edu.bowiestate.hotelManagement.person;
 
 import org.springframework.stereotype.Service;
 

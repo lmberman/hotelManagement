@@ -19,7 +19,7 @@ public class HomeController{
         return "login";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPTION','ROLE_HOUSEKEEP')")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPT','ROLE_HOUSEKE')")
     @GetMapping("/home")
     public String home(Authentication authentication, Model model) {
         // check roles and return home page based on role
@@ -29,7 +29,7 @@ public class HomeController{
 
                 if(role.equals(Employee.EmployeeRole.ROLE_MANAGER)){
                     return "managerHome";
-                } else if (role.equals(Employee.EmployeeRole.ROLE_ROLE_RECEPTION)) {
+                } else if (role.equals(Employee.EmployeeRole.ROLE_RECEPT)) {
                     return "receptionHome";
                 } else {
                     return "houseKeepHome";

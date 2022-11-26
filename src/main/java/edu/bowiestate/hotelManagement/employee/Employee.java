@@ -1,5 +1,6 @@
 package edu.bowiestate.hotelManagement.employee;
 
+import edu.bowiestate.hotelManagement.housekeep.HouseKeepTask;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -31,6 +33,9 @@ public class Employee {
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_DATE", nullable = false)
     private Date lastModifiedDate;
+
+    @OneToMany(mappedBy="employee")
+    private Set<HouseKeepTask> houseKeepTasks;
 
     // add created date and last modified date to this table
 
@@ -90,8 +95,8 @@ public class Employee {
 
     public enum EmployeeRole {
         ROLE_MANAGER("MANAGER"),
-        ROLE_ROLE_RECEPTION("ROLE_RECEPTION"),
-        ROLE_HOUSEKEEP("HOUSE_KEEP");
+        ROLE_RECEPT("ROLE_RECEPTION"),
+        ROLE_HOUSEKE("HOUSE_KEEP");
 
         private String nameWithoutPrefix;
 

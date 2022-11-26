@@ -71,8 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //default schema to create users
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username,password,true from employees where username = ?")
-                .authoritiesByUsernameQuery("select um.username, em.role from employees em where um.username = ?")
+                .usersByUsernameQuery("select employee_id as username,password,true as enabled from employee where employee_id = ?")
+                .authoritiesByUsernameQuery("select em.employee_id, em.role from employee em where em.employee_id = ?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(getPasswordEncoder());
     }
