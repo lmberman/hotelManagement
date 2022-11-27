@@ -17,10 +17,10 @@ public class HouseKeepTask {
     @TableGenerator(name = "HouseKeep_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 1, allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE,  generator = "HouseKeep_Gen")
     @Column(name="TASK_ID")
-    private long taskId;
+    private Long taskId;
 
-    @ManyToOne()
-    @JoinColumn(name="EMPLOYEE_ID", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
     private Employee employee;
 
     @ManyToOne
@@ -46,5 +46,61 @@ public class HouseKeepTask {
         CLEANING,
         LAUNDRY,
         COMPLETE
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public Date getDeadlineDate() {
+        return deadlineDate;
+    }
+
+    public void setDeadlineDate(Date deadlineDate) {
+        this.deadlineDate = deadlineDate;
+    }
+
+    public Date getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(Date completionDate) {
+        this.completionDate = completionDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

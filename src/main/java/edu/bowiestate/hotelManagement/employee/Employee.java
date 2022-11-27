@@ -24,6 +24,7 @@ public class Employee {
     @Column(name="PASSWORD")
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @JoinColumn(name = "ROLE")
     private EmployeeRole role;
 
@@ -35,11 +36,8 @@ public class Employee {
     @Column(name = "LAST_MODIFIED_DATE", nullable = false)
     private Date lastModifiedDate;
 
-    @OneToMany(mappedBy="employee")
-    private Set<HouseKeepTask> houseKeepTasks;
-
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "PERSON_ID")
+    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID")
     private Person person;
 
     // add created date and last modified date to this table
@@ -85,6 +83,14 @@ public class Employee {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,22 +105,22 @@ public class Employee {
     }
 
     public enum EmployeeRole {
-        ROLE_MANAGER("MANAGER"),
-        ROLE_RECEPT("ROLE_RECEPTION"),
-        ROLE_HOUSEKE("HOUSE_KEEP");
+        MANAGER("ROLE_MANAGER"),
+        RECEPT("ROLE_RECEPT"),
+        HOUSEKE("ROLE_HOUSEKE");
 
-        private String nameWithoutPrefix;
+        private String nameWithPrefix;
 
-        EmployeeRole(String nameWithoutPrefix) {
-            this.nameWithoutPrefix = nameWithoutPrefix;
+        EmployeeRole(String nameWithPrefix) {
+            this.nameWithPrefix = nameWithPrefix;
         }
 
-        public String getNameWithoutPrefix() {
-            return nameWithoutPrefix;
+        public String getNameWithPrefix() {
+            return nameWithPrefix;
         }
 
-        public void setNameWithoutPrefix(String nameWithoutPrefix) {
-            this.nameWithoutPrefix = nameWithoutPrefix;
+        public void setNameWithPrefix(String nameWithPrefix) {
+            this.nameWithPrefix = nameWithPrefix;
         }
     }
 }

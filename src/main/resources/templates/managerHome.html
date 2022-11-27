@@ -105,8 +105,8 @@
                         </thead>
                         <tbody>
                         <tr th:each="houseKeepTask: ${houseKeepingTasks}">
-                            <td th:text="${houseKeepTask.TaskId}"> Task Id</td>
-                            <td th:text="${houseKeepTask.employee.person.firstname | ' ' | houseKeepTask.employee.person.lastname}"> Firstname </td>
+                            <td th:text="${houseKeepTask.taskId}"> Task Id</td>
+                            <td th:text="${houseKeepTask.employee.person.firstname} + ' ' + ${houseKeepTask.employee.person.lastname}"> Firstname </td>
                             <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>
                             <td th:text="${houseKeepTask.deadlineDate}"> Deadline Date </td>
                             <td th:text="${houseKeepTask.status}"> Status </td>

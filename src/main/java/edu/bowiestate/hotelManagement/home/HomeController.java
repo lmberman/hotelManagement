@@ -37,11 +37,11 @@ public class HomeController{
         if(loggedInUserRole.isPresent()) {
             String role = loggedInUserRole.get().getAuthority();
 
-                if(role.equals(Employee.EmployeeRole.ROLE_MANAGER.name())){
+                if(role.equals(Employee.EmployeeRole.MANAGER.getNameWithPrefix())){
                     model.addAttribute("houseKeepingTasks", houseKeepTaskService.getAllInCompleteTasks());
                     model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "managerHome";
-                } else if (role.equals(Employee.EmployeeRole.ROLE_RECEPT.name())) {
+                } else if (role.equals(Employee.EmployeeRole.RECEPT.getNameWithPrefix())) {
                     model.addAttribute("houseKeepingTasks", houseKeepTaskService.getAllInCompleteTasks());
                     model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "receptionHome";

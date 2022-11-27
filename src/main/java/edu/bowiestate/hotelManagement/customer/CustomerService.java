@@ -32,7 +32,7 @@ public class CustomerService {
 
     public Customer findCustomerByFirstnameAndLastname(String firstname, String lastname) {
         Person person = personService.findByFirstnameAndLastname(firstname, lastname);
-        Optional<Customer> customer = customerRepository.findById(person.getPersonId());
+        Optional<Customer> customer = customerRepository.findById(person.getId());
         if(customer.isPresent()){
             return customer.get();
         } else {

@@ -12,8 +12,8 @@ public class Person {
     @Id
     @TableGenerator(name = "Person_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 5, allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Person_Gen")
-    @Column(name="PERSON_ID")
-    private Long personId;
+    @Column(name="id")
+    private Long id;
 
     @Column(name="FIRSTNAME")
     private String firstname;
@@ -39,12 +39,12 @@ public class Person {
     @Column(name = "ZIP")
     private String zip;
 
-    public Long getPersonId() {
-        return personId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPersonId(Long personId) {
-        this.personId = personId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -116,11 +116,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return personId == person.personId && middle == person.middle && lastname == person.lastname && firstname.equals(person.firstname) && telephone.equals(person.telephone) && address.equals(person.address) && city.equals(person.city) && state.equals(person.state) && zip.equals(person.zip);
+        return id == person.id && middle == person.middle && lastname == person.lastname && firstname.equals(person.firstname) && telephone.equals(person.telephone) && address.equals(person.address) && city.equals(person.city) && state.equals(person.state) && zip.equals(person.zip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(personId, firstname, middle, lastname, telephone, address, city, state, zip);
+        return Objects.hash(id, firstname, middle, lastname, telephone, address, city, state, zip);
     }
 }

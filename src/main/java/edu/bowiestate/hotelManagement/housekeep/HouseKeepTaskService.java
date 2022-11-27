@@ -12,10 +12,10 @@ public class HouseKeepTaskService {
     private HouseKeepRepository houseKeepRepository;
 
     public List<HouseKeepTask> getAllInCompleteTasks() {
-        return houseKeepRepository.findAllInCompleteTasks();
+        return houseKeepRepository.findAllByStatusNotOrderByCreatedDate(HouseKeepTask.TaskStatus.COMPLETE);
     }
 
-//    public List<HouseKeepTask> getAllCurrentDayTasks(){
-//
-//    }
+    public List<HouseKeepTask> getAllCompleteTasks() {
+        return houseKeepRepository.findAllByStatusOrderByCompletionDate(HouseKeepTask.TaskStatus.COMPLETE);
+    }
 }

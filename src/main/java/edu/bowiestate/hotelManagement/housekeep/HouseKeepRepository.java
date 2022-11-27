@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface HouseKeepRepository extends JpaRepository<HouseKeepTask, Long> {
 
-    @Query(nativeQuery = true,
-            value="SELECT * FROM HOUSE_KEEP_TASK WHERE STATUS <> 'COMPLETE'" )
-    public List<HouseKeepTask> findAllInCompleteTasks();
+    public List<HouseKeepTask> findAllByStatusNotOrderByCreatedDate(HouseKeepTask.TaskStatus status);
+    public List<HouseKeepTask> findAllByStatusOrderByCompletionDate(HouseKeepTask.TaskStatus status);
 }

@@ -30,7 +30,7 @@ public class PersonServiceTest {
 
         Person newPerson = personService.saveNewPerson(input);
 
-        assertThat(Long.valueOf(newPerson.getPersonId())).isNotNull();
+        assertThat(Long.valueOf(newPerson.getId())).isNotNull();
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PersonServiceTest {
         input.setZipcode("90218");
 
         Person newPerson = personService.saveNewPerson(input);
-        assertThat(personService.findByPersonById(newPerson.getPersonId())).isNotNull();
+        assertThat(personService.findByPersonById(newPerson.getId())).isNotNull();
     }
 
 
