@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Manage Hotel Details </title>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+        <a class="navbar-brand align-left" href="/home">Hotel Management Center Home</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a id="homeLink" class="nav-link" th:href="@{/home}">Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="hotelDetailsLink" class="nav-link" th:href="@{/hotelDetails}"> Manage Hotel Details </a>
+            </li>
+            <li class="nav-item">
+                <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
+            </li>
+            <li class="nav-item">
+                <a id="currentReservationsLink" class="nav-link" th:href="@{/currentReservations}"> Current Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/upcomingReservations}"> Upcoming Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
+            </li>
+            <li class="nav-item">
+                <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
+            </li>
+            <li class="nav-item">
+                <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Update/Add Employee </a>
+            </li>
+            <li class="nav-item">
+                <a id="logoutLink" class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title text-center text-bold"> Management Home </h1>
+    </div>
+    <div id="hotelDetails" class="card-body">
+        <h2> Hotel Details:  </h2>
+        <form th:action="@{/hotelDetails/update}" method="post" th:object="${hotelDetailsForm}" autocomplete="off" >
+            <div class="card-body col-md-6">
+                <h3> Days of Operation: <span th:text="${currentHotelDetails.startDayOfOperation} + '-' + ${currentHotelDetails.endDayOfOperation}"> </span> </h3>
+                <div class="form-group col">
+                    <label for="startDayOfOperation" class="col-sm-4 col-form-label"> Choose Start Weekday of Operation </label>
+                    <div class="col-sm-8">
+                        <select class="form-control selectpicker" th:field="*{startDayOfOperation}" id="startDayOfOperation">
+                            <option selected th:value="${currentHotelDetails.startDayOfOperation}" th:text="${currentHotelDetails.startDayOfOperation}"></option>
+                            <option th:each="weekDay :${T(edu.bowiestate.hotelManagement.hotelDetails.HotelDetails.DaysOfOperation).values()}"
+                                    th:if="weekDay != ${currentHotelDetails.startDayOfOperation}"
+                                    th:value="${weekDay}"
+                                    th:text="${weekDay}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="endDayOfOperation" class="col-sm-4 col-form-label"> Choose End Weekday of Operation </label>
+                    <div class="col-sm-8">
+                        <select class="form-control selectpicker" th:field="*{endDayOfOperation}" id="endDayOfOperation">
+                            <option selected th:value="${currentHotelDetails.endDayOfOperation}" th:text="${currentHotelDetails.endDayOfOperation}"></option>
+                            <option th:each="weekDay : ${T(edu.bowiestate.hotelManagement.hotelDetails.HotelDetails.DaysOfOperation).values()}"
+                                    th:if="weekDay != ${currentHotelDetails.endDayOfOperation}"
+                                    th:value="${weekDay}"
+                                    th:text="${weekDay}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body col-md-6">
+                <h3> Hours of Operation:  <span th:text="${currentHotelDetails.startHourOfOperation} + '-' + ${currentHotelDetails.endHourOfOperation}"> </span> </h3>
+                <div class="form-group col">
+                    <label for="startHourOfOperation" class="col-sm-4 col-form-label"> Choose Start Hour of Operation </label>
+                    <div class="col-sm-8">
+                        <select class="form-control selectpicker" th:field="*{startHourOfOperation}" id="startHourOfOperation">
+                            <option selected th:value="${currentHotelDetails.startHourOfOperation}" th:text="${currentHotelDetails.startHourOfOperation}"></option>
+                            <option id="12AM" value="12 AM"> 12 AM</option>
+                            <option id="1AM" value="1 AM"> 1 AM</option>
+                            <option id="2AM" value="2 AM"> 2 AM</option>
+                            <option id="3AM" value="3 AM"> 3 AM</option>
+                            <option id="4AM" value="4 AM"> 4 AM</option>
+                            <option id="5AM" value="5 AM"> 5 AM</option>
+                            <option id="6AM" value="6 AM"> 6 AM</option>
+                            <option id="7AM" value="7 AM"> 7 AM</option>
+                            <option id="8AM" value="8 AM"> 8 AM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="endHourOfOperation" class="col-sm-4 col-form-label"> Choose End Hour of Operation </label>
+                    <div class="col-sm-8">
+                        <select class="form-control selectpicker" th:field="*{endHourOfOperation}" id="endHourOfOperation">
+                            <option selected th:value="${currentHotelDetails.endHourOfOperation}" th:text="${currentHotelDetails.endHourOfOperation}"></option>
+                            <option id="8PM" value="8 PM"> 8 PM</option>
+                            <option id="9PM" value="9 PM"> 9 PM</option>
+                            <option id="10PM" value="10 PM"> 10 PM</option>
+                            <option id="11PM" value="11 PM"> 11 PM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body col-md-6">
+                <h3> Room Prices: </h3>
+                <div class="form-group">
+                    <label for="singleRoomPrice" class="col-sm-4 col-form-label">Single Room Price - Current Price: $<span th:text="${#numbers.formatDecimal(currentHotelDetails.singleRoomPrice, 0, 'COMMA', 2, 'POINT')}"></span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="singleRoomPrice"
+                               data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': ${currentHotelDetails.singleRoomPrice}"
+                               autocomplete="off" th:field="*{singleRoomPrice}" th:maxlength="5" th:value="${currentHotelDetails.singleRoomPrice}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="doubleRoomPrice" class="col-sm-4 col-form-label">Double Room Price - Current Price: $<span th:text="${#numbers.formatDecimal(currentHotelDetails.doubleRoomPrice, 0, 'COMMA', 2, 'POINT')}"></span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="doubleRoomPrice"
+                               data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': ${currentHotelDetails.doubleRoomPrice}"
+                               autocomplete="off" th:field="*{doubleRoomPrice}" th:maxlength="5" th:value="${currentHotelDetails.doubleRoomPrice}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="suiteRoomPrice" class="col-sm-4 col-form-label">Suite Room Price - Current Price: $<span th:text="${#numbers.formatDecimal(currentHotelDetails.suiteRoomPrice, 0, 'COMMA', 2, 'POINT')}"></span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="suiteRoomPrice"
+                           data-inputmask="'alias': 'numeric', 'groupSeparator': '.', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': ${currentHotelDetails.suiteRoomPrice}"
+                           autocomplete="off" th:field="*{suiteRoomPrice}" th:maxlength="5" th:value="${currentHotelDetails.suiteRoomPrice}"/>
+                    </div>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-primary" value="Save"/> Update Records </button>
+        </form>
+    </div>
+</div>
+<script th:src="@{webjars/jquery/3.6.1/jquery.min.js}"></script>
+<script th:src="@{webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+<script th:src="@{webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

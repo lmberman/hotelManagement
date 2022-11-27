@@ -1,6 +1,7 @@
 package edu.bowiestate.hotelManagement.employee;
 
 import edu.bowiestate.hotelManagement.housekeep.HouseKeepTask;
+import edu.bowiestate.hotelManagement.person.Person;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,6 +37,10 @@ public class Employee {
 
     @OneToMany(mappedBy="employee")
     private Set<HouseKeepTask> houseKeepTasks;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "PERSON_ID")
+    private Person person;
 
     // add created date and last modified date to this table
 

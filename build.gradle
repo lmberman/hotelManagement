@@ -26,7 +26,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.webjars:bootstrap:5.2.2'
-	implementation 'org.webjars:jquery-svg:1.5.0'
+	implementation 'org.webjars:jquery:3.6.1'
+	implementation 'org.webjars:popper.js:2.9.3'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
 	implementation 'joda-time:joda-time:2.12.1'
 }

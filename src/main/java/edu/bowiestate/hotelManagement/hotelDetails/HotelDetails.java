@@ -7,22 +7,22 @@ import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name="HOTEL_DETAILS")
+@Table(name = "HOTEL_DETAILS")
 public class HotelDetails {
 
     @Id
     @TableGenerator(name = "Details_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 1, allocationSize = 100)
-    @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Details_Gen")
-    @Column(name="ID")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Details_Gen")
+    @Column(name = "ID")
     private long id;
 
     @Column(name = "DAYS_OF_OPERATION")
     private String daysOfOperation;
 
-    @Column(name="HOURS_OF_OPERATION")
+    @Column(name = "HOURS_OF_OPERATION")
     private String hoursOfOperation;
 
-    @Column(name="SINGLE_ROOM_PRICE")
+    @Column(name = "SINGLE_ROOM_PRICE")
     private Double singleRoomPrice;
 
     @Column(name = "DOUBLE_ROOM_PRICE")
@@ -42,6 +42,12 @@ public class HotelDetails {
     public String getDaysOfOperation() {
         return daysOfOperation;
     }
+    public String getStartDayOfOperation() {
+        return daysOfOperation.split("-")[0];
+    }
+    public String getEndDayOfOperation() {
+        return daysOfOperation.split("-")[1];
+    }
 
     public void setDaysOfOperation(String daysOfOperation) {
         this.daysOfOperation = daysOfOperation;
@@ -49,6 +55,14 @@ public class HotelDetails {
 
     public String getHoursOfOperation() {
         return hoursOfOperation;
+    }
+
+    public String getStartHourOfOperation() {
+        return hoursOfOperation.split("-")[0];
+    }
+
+    public String getEndHourOfOperation() {
+        return hoursOfOperation.split("-")[1];
     }
 
     public void setHoursOfOperation(String hoursOfOperation) {
@@ -90,5 +104,9 @@ public class HotelDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, daysOfOperation, hoursOfOperation, singleRoomPrice, doubleRoomPrice, suiteRoomPrice);
+    }
+
+    public static enum DaysOfOperation {
+        MON, TUES, WED, THUR, FRI, SAT, SUN
     }
 }

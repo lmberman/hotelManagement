@@ -1,6 +1,7 @@
 package edu.bowiestate.hotelManagement.customer;
 
 import edu.bowiestate.hotelManagement.employee.Employee;
+import edu.bowiestate.hotelManagement.person.Person;
 import edu.bowiestate.hotelManagement.reservation.Reservation;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -33,6 +34,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Reservation> reservations;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CUST_ID", referencedColumnName = "PERSON_ID")
+    private Person person;
 
     public long getCustId() {
         return custId;

@@ -1,6 +1,9 @@
 package edu.bowiestate.hotelManagement.home;
 
 import edu.bowiestate.hotelManagement.employee.Employee;
+import edu.bowiestate.hotelManagement.hotelDetails.HotelDetails;
+import edu.bowiestate.hotelManagement.housekeep.HouseKeepTaskService;
+import edu.bowiestate.hotelManagement.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -9,10 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class HomeController{
+
+    @Autowired
+    private ReservationService reservationService;
+
+    @Autowired
+    private HouseKeepTaskService houseKeepTaskService;
 
     @GetMapping({"/login","/"})
     public String login() {
@@ -27,9 +37,13 @@ public class HomeController{
         if(loggedInUserRole.isPresent()) {
             String role = loggedInUserRole.get().getAuthority();
 
-                if(role.equals(Employee.EmployeeRole.ROLE_MANAGER)){
+                if(role.equals(Employee.EmployeeRole.ROLE_MANAGER.name())){
+                    model.addAttribute("houseKeepingTasks", houseKeepTaskService.getAllInCompleteTasks());
+                    model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "managerHome";
-                } else if (role.equals(Employee.EmployeeRole.ROLE_RECEPT)) {
+                } else if (role.equals(Employee.EmployeeRole.ROLE_RECEPT.name())) {
+                    model.addAttribute("houseKeepingTasks", houseKeepTaskService.getAllInCompleteTasks());
+                    model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "receptionHome";
                 } else {
                     return "houseKeepHome";

@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select employee_id as username,password,true as enabled from employee where employee_id = ?")
-                .authoritiesByUsernameQuery("select em.employee_id, em.role from employee em where em.employee_id = ?")
+                .authoritiesByUsernameQuery("select em.employee_id as username, em.role from employee em where em.employee_id = ?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(getPasswordEncoder());
     }
