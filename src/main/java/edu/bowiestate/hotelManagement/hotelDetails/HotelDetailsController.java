@@ -1,6 +1,7 @@
 package edu.bowiestate.hotelManagement.hotelDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ public class HotelDetailsController {
     @Autowired
     private HotelDetailsService hotelDetailsService;
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/hotelDetails")
     public String getHotelDetails(Model model){
         HotelDetailsOutput currentHotelDetails = hotelDetailsService.findCurrentHotelDetails();
@@ -23,6 +25,7 @@ public class HotelDetailsController {
         return "manageHotelDetails";
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/hotelDetails/update")
     public String updateHotelDetails(@Valid HotelDetailsForm hotelDetailsForm, BindingResult bindingResult, Model model){
         if(!bindingResult.hasErrors()) {

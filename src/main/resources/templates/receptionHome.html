@@ -62,12 +62,12 @@
                         <td th:text="${reservation.startDate}"> Start Date </td>
                         <td th:text="${reservation.endDate}"> End Date </td>
                         <td th:text="${reservation.status}"> Status </td>
-                        <td th:if="${reservation.status == 'OPEN'}">
+                        <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).OPEN}">
                             <a th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
                             <br>
                             <a th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
                         </td>
-                        <td th:if="${reservation.status == 'IN_PROGRESS'">
+                        <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).IN_PROGRESS}">
                             <a th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
                             <br>
                             <a th:href="|/reservation/${reservation.confirmNum}/checkout|"> Checkout </a>
@@ -88,6 +88,7 @@
                             <th scope="col"> Owner </th>
                             <th scope="col"> Room # </th>
                             <th scope="col"> Deadline Date </th>
+                            <th scope="col"> Type </th>
                             <th scope="col"> Status </th>
                         </tr>
                         </thead>
@@ -97,6 +98,7 @@
                             <td th:text="${houseKeepTask.getEmployeeName()}"> Firstname </td>
                             <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>
                             <td th:text="${houseKeepTask.deadlineDate}"> Deadline Date </td>
+                            <td th:text="${houseKeepTask.type}"> Status </td>
                             <td th:text="${houseKeepTask.status}"> Status </td>
                         </tr>
                         </tbody>

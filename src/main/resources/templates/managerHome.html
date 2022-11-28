@@ -15,10 +15,10 @@
                 <a id="homeLink" class="nav-link" th:href="@{/home}">Home
                 </a>
             </li>
-            <li class="nav-item">
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
                 <a id="hotelDetailsLink" class="nav-link" th:href="@{/hotelDetails}"> Manage Hotel Details </a>
             </li>
-            <li class="nav-item">
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
                 <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
             </li>
             <li class="nav-item">
@@ -30,10 +30,10 @@
             <li class="nav-item">
                 <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
             </li>
-            <li class="nav-item">
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
                 <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
             </li>
-            <li class="nav-item">
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
                 <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Update/Add Employee </a>
             </li>
             <li class="nav-item">

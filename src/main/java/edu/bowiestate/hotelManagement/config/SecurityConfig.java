@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -44,18 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/home").authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint()).accessDeniedPage("/login")
+                .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint())
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
-//                    .successHandler(new LoginSuccessHandler())
                 .permitAll()
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
-//                .addLogoutHandler(new LogoutSuccessHandler())
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
 

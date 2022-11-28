@@ -44,7 +44,9 @@ public class HomeController{
                     model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "receptionHome";
                 } else {
-                    return "houseKeepHome";
+                    model.addAttribute("ownedTasks", houseKeepTaskService.getTasksForUser(authentication.getName()));
+                    model.addAttribute("unownedTasks", houseKeepTaskService.getAllUnownedTasks());
+                    return "houseKeepingHome";
                 }
 
         }
