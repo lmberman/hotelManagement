@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Upcoming Reservations </title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <a class="navbar-brand align-left" href="/home">Hotel Management Center Home</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a id="homeLink" class="nav-link" th:href="@{/home}">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a id="hotelDetailsLink" class="nav-link" th:href="@{/hotelDetails}"> Manage Hotel Details </a>
+                </li>
+                <li class="nav-item">
+                    <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
+                </li>
+                <li class="nav-item">
+                    <a id="currentReservationsLink" class="nav-link" th:href="@{/reservation/current}"> Current Reservations </a>
+                </li>
+                <li class="nav-item">
+                    <a id="upcomingReservationsLink" class="nav-link" th:href="@{/reservation/upcoming}"> Upcoming Reservations </a>
+                </li>
+                <li class="nav-item">
+                    <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
+                </li>
+                <li class="nav-item">
+                    <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
+                </li>
+                <li class="nav-item">
+                    <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Update/Add Employee </a>
+                </li>
+                <li class="nav-item">
+                    <a id="logoutLink" class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title text-center text-bold"> Upcoming Reservations </h1>
+        </div>
+        <div id="upcoming_reservations" class="card-body">
+            <div>
+                <div class="table-responsive text-center">
+                    <table id="upcoming_reservations-table" class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"> Confirmation # </th>
+                                <th scope="col"> Firstname </th>
+                                <th scope="col"> Lastname </th>
+                                <th scope="col"> Room Type </th>
+                                <th scope="col"> Room # </th>
+                                <th scope="col"> Start Date </th>
+                                <th scope="col"> End Date </th>
+                                <th scope="col"> Status </th>
+                                <th scope="col"> Actions </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="reservation: ${reservations}">
+                                <td th:text="${reservation.confirmNum}"> Confirmation Number</td>
+                                <td th:text="${reservation.customer.person.firstname}"> Firstname </td>
+                                <td th:text="${reservation.customer.person.lastname}"> Lastname  </td>
+                                <td th:text="${reservation.room.type}"> Room Type </td>
+                                <td th:text="${reservation.room.roomNum}"> Room Number </td>
+                                <td th:text="${reservation.startDate}"> Start Date </td>
+                                <td th:text="${reservation.endDate}"> End Date </td>
+                                <td th:text="${reservation.status}"> Status </td>
+                                <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).OPEN}">
+                                    <a th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
+                                    <br>
+                                    <a th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
+                                    <br>
+                                    <a th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
+                                    <br>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/webjars/jquery/3.6.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

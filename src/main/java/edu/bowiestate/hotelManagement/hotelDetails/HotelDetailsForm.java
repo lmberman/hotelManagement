@@ -4,7 +4,6 @@ import edu.bowiestate.hotelManagement.hotelDetails.HotelDetails.DaysOfOperation;
 
 
 public class HotelDetailsForm {
-    private Long id;
     private DaysOfOperation startDayOfOperation;
     private DaysOfOperation endDayOfOperation;
     private String startHourOfOperation;
@@ -67,13 +66,5 @@ public class HotelDetailsForm {
 
     public void setSuiteRoomPrice(Double suiteRoomPrice) {
         this.suiteRoomPrice = suiteRoomPrice;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

@@ -3,7 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Manage Hotel Details </title>
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -22,10 +22,10 @@
                 <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
             </li>
             <li class="nav-item">
-                <a id="currentReservationsLink" class="nav-link" th:href="@{/currentReservations}"> Current Reservations </a>
+                <a id="currentReservationsLink" class="nav-link" th:href="@{/reservation/current}"> Current Reservations </a>
             </li>
             <li class="nav-item">
-                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/upcomingReservations}"> Upcoming Reservations </a>
+                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/reservation/upcoming}"> Upcoming Reservations </a>
             </li>
             <li class="nav-item">
                 <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
@@ -45,6 +45,9 @@
 <div class="card">
     <div class="card-body">
         <h1 class="card-title text-center text-bold"> Hotel Details Management </h1>
+    </div>
+    <div id="updateSuccessMessage" th:if="${updateSuccessful}">
+        Update Successful
     </div>
     <div id="hotelDetails" class="card-body">
         <h2> Hotel Details:  </h2>
@@ -141,8 +144,8 @@
         </form>
     </div>
 </div>
-<script th:src="@{webjars/jquery/3.6.1/jquery.min.js}"></script>
-<script th:src="@{webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
-<script th:src="@{webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/3.6.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
 </body>
 </html>

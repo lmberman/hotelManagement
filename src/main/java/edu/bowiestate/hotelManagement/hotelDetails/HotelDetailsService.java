@@ -24,18 +24,15 @@ public class HotelDetailsService {
     }
 
     public HotelDetails updateHotelDetails(HotelDetailsForm hotelDetailsForm) {
-        Optional<HotelDetails> hotelDetails = hotelDetailsRepository.findById(hotelDetailsForm.getId());
-        if(hotelDetails.isPresent()){
-            HotelDetails existingHotelDetails = hotelDetails.get();
-            existingHotelDetails.setDaysOfOperation(hotelDetailsForm.getStartDayOfOperation() + "-" + hotelDetailsForm.getEndDayOfOperation());
-            existingHotelDetails.setHoursOfOperation(hotelDetailsForm.getStartHourOfOperation() + "-" + hotelDetailsForm.getEndHourOfOperation());
+        HotelDetails hotelDetail = hotelDetailsRepository.findAll().get(0);
+        hotelDetail.setDaysOfOperation(hotelDetailsForm.getStartDayOfOperation() + "-" + hotelDetailsForm.getEndDayOfOperation());
+        hotelDetail.setHoursOfOperation(hotelDetailsForm.getStartHourOfOperation() + "-" + hotelDetailsForm.getEndHourOfOperation());
 
-            existingHotelDetails.setSingleRoomPrice(hotelDetailsForm.getSingleRoomPrice());
+        hotelDetail.setSingleRoomPrice(hotelDetailsForm.getSingleRoomPrice());
 
-            existingHotelDetails.setDoubleRoomPrice(hotelDetailsForm.getDoubleRoomPrice());
-            existingHotelDetails.setSuiteRoomPrice(hotelDetailsForm.getSuiteRoomPrice());
-            hotelDetailsRepository.save(existingHotelDetails);
-        }
+        hotelDetail.setDoubleRoomPrice(hotelDetailsForm.getDoubleRoomPrice());
+        hotelDetail.setSuiteRoomPrice(hotelDetailsForm.getSuiteRoomPrice());
+        hotelDetailsRepository.save(hotelDetail);
         // throw exception
        return null;
     }

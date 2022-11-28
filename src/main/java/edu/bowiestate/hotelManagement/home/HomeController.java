@@ -1,7 +1,6 @@
 package edu.bowiestate.hotelManagement.home;
 
 import edu.bowiestate.hotelManagement.employee.Employee;
-import edu.bowiestate.hotelManagement.hotelDetails.HotelDetails;
 import edu.bowiestate.hotelManagement.housekeep.HouseKeepTaskService;
 import edu.bowiestate.hotelManagement.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller

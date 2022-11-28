@@ -22,10 +22,10 @@
                 <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
             </li>
             <li class="nav-item">
-                <a id="currentReservationsLink" class="nav-link" th:href="@{/reservation/current}"> Current Reservations </a>
+                <a id="currentReservationsLink" class="nav-link" th:href="@{/currentReservations}"> Current Reservations </a>
             </li>
             <li class="nav-item">
-                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/reservation/upcoming}"> Upcoming Reservations </a>
+                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/upcomingReservations}"> Upcoming Reservations </a>
             </li>
             <li class="nav-item">
                 <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
@@ -74,12 +74,12 @@
                         <td th:text="${reservation.startDate}"> Start Date </td>
                         <td th:text="${reservation.endDate}"> End Date </td>
                         <td th:text="${reservation.status}"> Status </td>
-                        <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).OPEN}">
+                        <td th:if="${reservation.status == 'OPEN'}">
                             <a th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
                             <br>
                             <a th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
                         </td>
-                        <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).IN_PROGRESS}">
+                        <td th:if="${reservation.status == 'IN_PROGRESS'">
                             <a th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
                             <br>
                             <a th:href="|/reservation/${reservation.confirmNum}/checkout|"> Checkout </a>
@@ -100,17 +100,15 @@
                             <th scope="col"> Owner </th>
                             <th scope="col"> Room # </th>
                             <th scope="col"> Deadline Date </th>
-                            <th scope="col"> Type </th>
                             <th scope="col"> Status </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="houseKeepTask: ${houseKeepingTasks}">
-                            <td th:text="${houseKeepTask.taskId}"> Task Id</td>
-                            <td th:text="${houseKeepTask.getEmployeeName()}"> Firstname </td>
+                            <td th:text="${houseKeepTask.TaskId}"> Task Id</td>
+                            <td th:text="${houseKeepTask.employee.person.firstname | ' ' | houseKeepTask.employee.person.lastname}"> Firstname </td>
                             <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>
                             <td th:text="${houseKeepTask.deadlineDate}"> Deadline Date </td>
-                            <td th:text="${houseKeepTask.type}"> Status </td>
                             <td th:text="${houseKeepTask.status}"> Status </td>
                         </tr>
                         </tbody>

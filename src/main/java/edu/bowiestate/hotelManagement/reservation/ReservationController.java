@@ -1,42 +1,76 @@
 package edu.bowiestate.hotelManagement.reservation;
 
+import edu.bowiestate.hotelManagement.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
-@RestController
+@Controller
 public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
 
-    @GetMapping("/reservation")
-    public List<Reservation> getAllReservations() {
-        return reservationService.findAllReservations();
-    }
+    @Autowired
+    private RoomService roomService;
 
     @GetMapping("/reservation/current")
-    public List<Reservation> getCurrentDaysReservations() {
-        return reservationService.findCurrentDaysReservations();
+    public String getCurrentDaysReservations(Model model) {
+        model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
+        return "currentReservations";
     }
 
-    @GetMapping("/reservation/{id}")
-    public Reservation getReservationByConfirmationNum(@PathVariable long id){
-        return reservationService.findByConfirmationNum(id);
+    @GetMapping("/reservation/upcoming")
+    public String getUpcomingReservations(Model model) {
+        model.addAttribute("reservations",reservationService.findFutureReservations());
+        return "upcomingReservations";
     }
 
-    @PostMapping("/reservation/checkIn/{id}")
-    public Reservation checkIn(@PathVariable long id){
-        return reservationService.checkIn(id);
+    @GetMapping("/reservation/{id}/checkIn")
+    public String checkIn(@PathVariable long id, HttpServletRequest request){
+        // need to direct to payment page before we get here
+        reservationService.checkIn(id);
+        String targetUrl = request.getHeader("referer");
+        return "redirect:" + targetUrl;
     }
 
-    @PostMapping("/reservation/checkout/{id}")
-    public Reservation checkOut(@PathVariable long id){
-        return reservationService.checkout(id);
+    @GetMapping("/reservation/{id}/checkout")
+    public String checkOut(@PathVariable long id, HttpServletRequest request){
+        reservationService.checkout(id);
+        String targetUrl = request.getHeader("referer");
+        return "redirect:" + targetUrl;
+    }
+
+    @GetMapping("/reservation/{id}/cancel")
+    public String cancel(@PathVariable long id,HttpServletRequest request){
+        reservationService.cancel(id);
+        String targetUrl = request.getHeader("referer");
+        return "redirect:" + targetUrl;
+    }
+
+    @GetMapping("/reservation/{id}/update")
+    public String getUpdatePage(@PathVariable long id, Model model){
+        model.addAttribute("reservation",reservationService.findByConfirmationNum(id));
+        model.addAttribute("reservationUpdateForm", new ReservationUpdateForm());
+        model.addAttribute("availableRooms", roomService.getAllAvailableRooms());
+        return "reservationUpdate";
+    }
+
+    @PostMapping("/reservation/update")
+    public String updateReservation(@Valid ReservationUpdateForm reservationUpdateForm, BindingResult bindingResult, Model model){
+        reservationService.updateReservation(reservationUpdateForm);
+        model.addAttribute("reservation",reservationService.findByConfirmationNum(reservationUpdateForm.getConfirmNum()));
+        model.addAttribute("reservationUpdateForm", reservationUpdateForm);
+        model.addAttribute("availableRooms", roomService.getAllAvailableRooms());
+        model.addAttribute("updateSuccessful", true);
+        return "redirect:/reservation/"+ reservationUpdateForm.getConfirmNum() + "/update";
     }
 
 }

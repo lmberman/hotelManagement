@@ -5,6 +5,7 @@ import edu.bowiestate.hotelManagement.room.Room;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -26,16 +27,16 @@ public class Reservation {
     private Room room;
 
     @Column(name="START_DATE")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name="END_DATE")
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name="PRICE_LOCKED")
-    private boolean priceLocked;
+    private char priceLocked;
 
     @Column(name="DO_NOT_DISTURB")
-    private boolean doNotDisturb;
+    private char doNotDisturb;
 
     @Column(name="PRICE")
     private double price;
@@ -68,35 +69,35 @@ public class Reservation {
         this.room = room;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public boolean isPriceLocked() {
+    public char isPriceLocked() {
         return priceLocked;
     }
 
-    public void setPriceLocked(boolean priceLocked) {
+    public void setPriceLocked(char priceLocked) {
         this.priceLocked = priceLocked;
     }
 
-    public boolean isDoNotDisturb() {
+    public char isDoNotDisturb() {
         return doNotDisturb;
     }
 
-    public void setDoNotDisturb(boolean doNotDisturb) {
+    public void setDoNotDisturb(char doNotDisturb) {
         this.doNotDisturb = doNotDisturb;
     }
 
