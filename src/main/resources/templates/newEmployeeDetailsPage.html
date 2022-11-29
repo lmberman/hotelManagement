@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>New Employee Details Creation </title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+        <a class="navbar-brand align-left" href="/home">Hotel Management Center Home</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a id="homeLink" class="nav-link" th:href="@{/home}">Home </a>
+            </li>
+
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="hotelDetailsLink" class="nav-link" th:href="@{/hotelDetails}"> Manage Hotel Details </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
+            </li>
+            <li class="nav-item">
+                <a id="currentReservationsLink" class="nav-link" th:href="@{/reservation/current}"> Current Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/reservation/upcoming}"> Upcoming Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Add Employee </a>
+            </li>
+            <li class="nav-item">
+                <a id="logoutLink" class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title text-center text-bold">  New Employee Signup </h1>
+    </div>
+    <div class="card-body">
+        <h2> Please fill out the following fields with your information </h2>
+        <form th:action="@{/newEmployee/details}" method="post" th:object="${personInput}" autocomplete="off" >
+            <div class="card-body">
+                <div id="employeeName">
+                    <div class="input-group mb-3">
+                        <div class="form-group">
+                            <label class="control-label" for="firstname"> Firstname: </label>
+                            <input required class="form-control" id="firstname" type="text" th:field="*{firstname}" name="firstname" placeholder="ex:Bob" minlength="1" maxlength="50"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('firstname')}">
+                                <span><p th:errors="*{firstname}"> Invalid firstname </p></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-group">
+                            <label class="control-label" for="middle"> Middle Initial: </label>
+                            <input required class="form-control" id="middle" type="text" th:field="*{middle}" name="middle" placeholder="L" maxlength="1"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('middle')}">
+                                <span><p th:errors="*{middle}"> Invalid Middle Initial </p></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-group">
+                            <label class="control-label" for="lastname"> Lastname: </label>
+                            <input required class="form-control" id="lastname" type="text" th:field="*{lastname}" name="lastname" placeholder="ex:Ross" minlength="2" maxlength="50"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('lastname')}">
+                                <span><p th:errors="*{lastname}"> Invalid Lastname </p></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="addressInfo">
+                    <label class="control-label" for="street_number"> Enter your address: </label>
+                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" class="form-control">
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <div class="form-group">
+                                <label class="control-label" for="street_number"> Street Address: </label>
+                                <input class="form-control field" id="street_number" type="text" th:field="*{address}" name="address" placeholder="ex:2110 Eagle Way" minlength="10" maxlength="50" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <div class="form-group">
+                                <label class="control-label" for="locality"> City: </label>
+                                <input class="form-control field" id="locality" type="text" th:field="*{city}" name="city" placeholder="ex:Los Angeles" minlength="4" maxlength="50" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <div class="form-group">
+                                <label class="control-label" for="administrative_area_level_1"> State: </label>
+                                <input class="form-control" id="administrative_area_level_1" type="text" th:field="*{state}" name="state" placeholder="ex:CA" minlength="2" maxlength="2" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <div class="form-group">
+                                <label class="control-label" for="postal_code"> Zipcode: </label>
+                                <input class="form-control" id="postal_code" type="text" th:field="*{zipcode}" name="zipcode" placeholder="ex:90210" minlength="5" maxlength="5" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <div class="form-group">
+                                <label class="control-label" for="telephone"> Phone Number: </label>
+                                <input required class="form-control" id="telephone" type="text" th:field="*{telephone}" name="telephone" minlength="12" maxlength="12" placeholder="ex:301-852-6235"/>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('telephone')}">
+                                    <span><p th:errors="*{telephone}"> Invalid Phone Number </p></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" value="Configure Credentials"/> Configure Credentials</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKyukyygMMaIQjmSPcOucSQJrN7DezW3c&libraries=places&callback=initAutocomplete" async defer></script>
+<script th:src="@{/auto-complete.js}" type="text/javascript"></script>
+</body>
+</html>

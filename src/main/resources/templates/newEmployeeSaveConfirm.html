@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>New Employee Creation Confirmation </title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+        <a class="navbar-brand align-left" href="/home">Hotel Management Center Home</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a id="homeLink" class="nav-link" th:href="@{/home}">Home </a>
+            </li>
+
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="hotelDetailsLink" class="nav-link" th:href="@{/hotelDetails}"> Manage Hotel Details </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="vacancyListLink" class="nav-link" th:href="@{/vacancyList}"> Vacancy List </a>
+            </li>
+            <li class="nav-item">
+                <a id="currentReservationsLink" class="nav-link" th:href="@{/reservation/current}"> Current Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="upcomingReservationsLink" class="nav-link" th:href="@{/reservation/upcoming}"> Upcoming Reservations </a>
+            </li>
+            <li class="nav-item">
+                <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
+                <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Add Employee </a>
+            </li>
+            <li class="nav-item">
+                <a id="logoutLink" class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title text-center text-bold">  New Employee Creation Confirmation </h1>
+    </div>
+    <div class="card-body">
+        <div class="card-body">
+            <div id="employeeInformation">
+                <div class="row">
+                    <label class="col-sm-2 col-label" for="employeeId"> EmployeeId: </label>
+                    <h3 id="employeeId" th:text="${employee.employeeId}" class="card-text"> </h3>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 col-label" for="role"> Role: </label>
+                    <h3 id="role" th:text="${employee.role.name}" class="card-text"> </h3>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 col-label" for="name"> Name: </label>
+                    <h3 id="name" th:text="${employee.getName()}" class="card-text"> </h3>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 col-label" for="address"> Address: </label>
+                    <h3 id="address" th:text="${employee.getAddress()}" class="card-text"> </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

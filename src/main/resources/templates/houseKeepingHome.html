@@ -76,7 +76,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="houseKeepTask: ${unknownedTasks}">
+                        <tr th:each="houseKeepTask: ${unownedTasks}">
                             <td th:text="${houseKeepTask.taskId}"> Task Id</td>
                             <td th:text="${houseKeepTask.getEmployeeName()}"> Firstname </td>
                             <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>

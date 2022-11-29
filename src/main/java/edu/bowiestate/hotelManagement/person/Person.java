@@ -15,29 +15,29 @@ public class Person {
     @Column(name="id")
     private Long id;
 
-    @Column(name="FIRSTNAME")
+    @Column(name="FIRSTNAME", length = 50)
     private String firstname;
 
     @Column(name="MIDDLE")
     private char middle;
 
-    @Column(name="LASTNAME")
+    @Column(name="LASTNAME", length = 50)
     private String lastname;
 
-    @Column(name = "TELEPHONE", length = 12)
+    @Column(name = "TELEPHONE", length = 14)
     private String telephone;
 
-    @Column(name = "ADDRESS")
+    @Column(name = "ADDRESS", length = 50)
     private String address;
 
-    @Column(name = "CITY")
+    @Column(name = "CITY", length = 50)
     private String city;
 
-    @Column(name = "STATE")
+    @Column(name = "STATE", length = 50)
     private String state;
 
-    @Column(name = "ZIP")
-    private String zip;
+    @Column(name = "ZIPCODE", length = 5)
+    private String zipcode;
 
     public Long getId() {
         return id;
@@ -103,12 +103,12 @@ public class Person {
         this.state = state;
     }
 
-    public String getZip() {
-        return zip;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     @Override
@@ -116,11 +116,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && middle == person.middle && lastname == person.lastname && firstname.equals(person.firstname) && telephone.equals(person.telephone) && address.equals(person.address) && city.equals(person.city) && state.equals(person.state) && zip.equals(person.zip);
+        return id == person.id && middle == person.middle && lastname == person.lastname && firstname.equals(person.firstname) && telephone.equals(person.telephone) && address.equals(person.address) && city.equals(person.city) && state.equals(person.state) && zipcode.equals(person.zipcode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, middle, lastname, telephone, address, city, state, zip);
+        return Objects.hash(id, firstname, middle, lastname, telephone, address, city, state, zipcode);
     }
 }

@@ -20,7 +20,7 @@ public class PersonService {
         person.setAddress(personInput.getAddress());
         person.setCity(personInput.getCity());
         person.setState(personInput.getState());
-        person.setZip(personInput.getZipcode());
+        person.setZipcode(personInput.getZipcode());
 
         return personRepository.save(person);
     }

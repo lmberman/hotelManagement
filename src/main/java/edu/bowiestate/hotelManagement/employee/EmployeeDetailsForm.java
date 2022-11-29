@@ -1,24 +1,13 @@
-package edu.bowiestate.hotelManagement.person;
+package edu.bowiestate.hotelManagement.employee;
 
-import org.hibernate.validator.constraints.Length;
-
-public class PersonInput {
-    @Length(min = 1, max=50)
+public class EmployeeDetailsForm {
     private String firstname;
     private char middle;
-    @Length(min = 2, max=50)
     private String lastname;
-    @Length(min = 12, max=12)
     private String telephone;
-
-    @Length(min = 10, max=50)
     private String address;
-
-    @Length(min = 4, max=50)
     private String city;
-    @Length(min = 2, max=2)
     private String state;
-    @Length(min = 5, max=5)
     private String zipcode;
 
     public String getFirstname() {

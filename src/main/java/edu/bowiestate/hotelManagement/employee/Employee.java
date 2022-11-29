@@ -1,15 +1,13 @@
 package edu.bowiestate.hotelManagement.employee;
 
-import edu.bowiestate.hotelManagement.housekeep.HouseKeepTask;
 import edu.bowiestate.hotelManagement.person.Person;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Set;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -30,11 +28,11 @@ public class Employee {
 
     @CreatedDate
     @Column(name = "CREATED_DATE", nullable = false)
-    private Date createdDate;
+    private LocalDate createdDate;
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_DATE", nullable = false)
-    private Date lastModifiedDate;
+    private LocalDate lastModifiedDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID")
@@ -67,19 +65,19 @@ public class Employee {
         this.role = role;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDate getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
@@ -89,6 +87,14 @@ public class Employee {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public String getName() {
+        return person.getFirstname() + " "  + person.getMiddle() + " " + person.getLastname();
+    }
+
+    public String getAddress() {
+        return person.getAddress() + " "  + person.getCity() + "," + person.getState() + " " + person.getZipcode();
     }
 
     @Override
