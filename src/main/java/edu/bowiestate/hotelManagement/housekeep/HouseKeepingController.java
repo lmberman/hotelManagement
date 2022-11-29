@@ -39,14 +39,14 @@ public class HouseKeepingController {
         return "redirect:/houseKeepingTasks";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_HOUSKE')")
+    @PreAuthorize("hasAnyRole('ROLE_HOUSEKE')")
     @GetMapping("/houseKeepTask/{id}/claim")
     public String claimHouseKeepTask(@PathVariable Long id, Principal principal){
         houseKeepTaskService.assignTaskToEmployee(id, principal.getName());
         return "redirect:/home";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_HOUSKE')")
+    @PreAuthorize("hasAnyRole('ROLE_HOUSEKE')")
     @GetMapping("/houseKeepTask/{id}/update")
     public String updateTask(@PathVariable Long id, Model model) {
         model.addAttribute("houseKeepTask",houseKeepTaskService.findById(id));
