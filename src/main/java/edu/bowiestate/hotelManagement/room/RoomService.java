@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,11 @@ public class RoomService {
     public List<Room> getAllRooms() { return roomRepository.findAll(Sort.by("roomNum"));}
 
     public List<Room> getAllAvailableRooms() {
-        return roomRepository.findAllByStatus(Room.RoomStatus.AVAILABLE);
+        return roomRepository.findAllAvailableRooms(LocalDate.now());
+    }
+
+    public List<Room> getRoomsWithNoPendingOrInProgressTasks() {
+        return roomRepository.findRoomsWithNoPendingOrInProgressTasks();
     }
 
     public Room findById(Long id) {

@@ -97,8 +97,16 @@ public class ReservationService {
             Reservation existingReservation = reservation.get();
             Room room = roomService.findById(reservationUpdateForm.getRoomNum());
             if(room != null) {
+                if(room.getRoomNum() != existingReservation.getRoom().getRoomNum()) {
+                    Room currentRoom = existingReservation.getRoom();
+                    HouseKeepTaskForm houseKeepTaskForm = new HouseKeepTaskForm();
+                    houseKeepTaskForm.setTaskRoomNum(currentRoom.getRoomNum());
+                    houseKeepTaskForm.setTaskType(HouseKeepTask.TaskType.CLEANING);
+                    houseKeepTaskForm.setDeadlineDate(LocalDate.now().plusDays(1));
+                    houseKeepTaskService.saveHouseKeepTask(houseKeepTaskForm);
+                }
+
                 existingReservation.setRoom(room);
-                existingReservation.setPrice(reservationUpdateForm.getPrice());
                 existingReservation.setStartDate(reservationUpdateForm.getStartDate());
                 existingReservation.setEndDate(reservationUpdateForm.getEndDate());
                 return reservationRepository.save(existingReservation);

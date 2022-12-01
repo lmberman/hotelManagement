@@ -7,7 +7,7 @@
     <title> Hotel Management Application Login </title>
 </head>
 <body>
-<div th:if="${param.error}">
+<div id="invalidCredentialsError" th:if="${param.error}">
     Invalid username and password.
 </div>
 <div th:if="${param.logout}">
@@ -33,7 +33,7 @@
                     <input id="password" class="form-control" type="password" name="password"/>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" value="Sign In"> Sign In</button>
+            <button id="SignIn" type="submit" class="btn btn-primary" value="Sign In"> Sign In</button>
         </form>
     </div>
 </div>

@@ -47,6 +47,9 @@
         <h1 class="card-title text-center text-bold"> Add HouseKeep Task To Room </h1>
     </div>
     <div id="add-housekeep-task-section" class="card-body">
+        <div id="updateSuccessMessage" th:if="${updateSuccessful}">
+            House Keeping Task Added to the list
+        </div>
         <form id="add_task_to_room" th:action="@{/houseKeep/addTask}" method="post" th:object="${houseKeepTaskForm}" autocomplete="off" >
             <div class="card-body col-md-6">
                 <div class="form-group col">
@@ -79,7 +82,7 @@
                     <div class="col-sm-8">
                         <label for="deadlineDate" class="col-sm-4 col-form-label"> Select Deadline Date </label>
                         <div class="input-group date">
-                            <input type="date" class="form-control datepicker" th:field="*{deadlineDate}" id="deadlineDate"/>
+                            <input type="date" class="form-control datepicker" th:field="*{deadlineDate}" id="deadlineDate" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
                         </div>
                     </div>
                 </div>

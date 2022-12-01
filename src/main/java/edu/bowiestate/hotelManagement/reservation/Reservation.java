@@ -3,9 +3,11 @@ package edu.bowiestate.hotelManagement.reservation;
 import edu.bowiestate.hotelManagement.customer.Customer;
 import edu.bowiestate.hotelManagement.room.Room;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -25,9 +27,11 @@ public class Reservation {
     @JoinColumn(name = "ROOM_NUM", nullable = false)
     private Room room;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="START_DATE")
     private LocalDate startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="END_DATE")
     private LocalDate endDate;
 
@@ -76,12 +80,19 @@ public class Reservation {
         this.startDate = startDate;
     }
 
+    public String getStartDateString() {
+        return DateTimeFormatter.ISO_DATE.format(startDate);
+    }
     public LocalDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getEndDateString() {
+        return DateTimeFormatter.ISO_DATE.format(endDate);
     }
 
     public char isPriceLocked() {

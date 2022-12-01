@@ -55,7 +55,7 @@
                 <div class="form-group mb-3">
                     <label for="confirmNum" class="col-sm-4 col-form-label"> Reservation Confirmation Number:</label>
                     <div class="col-sm-8">
-                        <input type="text" disabled class="form-control-plaintext" id="confirmNum" th:field="*{confirmNum}" th:value="${reservation.confirmNum}" th:text="${reservation.confirmNum}"/>
+                        <input type="text" class="form-control-plaintext" id="confirmNum" th:field="*{confirmNum}" th:value="${reservation.confirmNum}"/>
                     </div>
                 </div>
                 <div class="form-group col">
@@ -64,7 +64,7 @@
                         <select required class="form-control selectpicker" th:field="*{roomNum}" id="roomNum">
                             <option selected th:value="${reservation.room.roomNum}" th:text="${reservation.room.roomNum}"></option>
                             <option th:each="room :${availableRooms}"
-                                    th:if="room.roomNum != ${reservation.room.roomNum}"
+                                    th:if="${room.roomNum} != ${reservation.room.roomNum}"
                                     th:value="${room.roomNum}"
                                     th:text="${room.roomNum}">
                             </option>
@@ -76,7 +76,7 @@
                         <div class="col-sm-8">
                             <label for="startDate" class="col-sm-4 col-form-label"> Update Start Date </label>
                             <div class="input-group date">
-                                <input required type="date" class="form-control datepicker" th:field="*{startDate}" id="startDate" th:value="${reservation.startDate}"/>
+                                <input required type="date" class="form-control datepicker" th:field="*{startDate}" id="startDate" th:value="${reservation.startDate}" th:attr="min=${reservation.getStartDateString()}"/>
                             </div>
                         </div>
                     </div>
@@ -86,18 +86,8 @@
                         <div class="col-sm-8">
                             <label for="endDate" class="col-sm-4 col-form-label"> Update End Date </label>
                             <div class="input-group date">
-                                <input required type="date" class="form-control datepicker" th:field="*{endDate}" id="endDate" th:value="${reservation.endDate}"/>
+                                <input required type="date" class="form-control datepicker" th:field="*{endDate}" id="endDate" th:value="${reservation.endDate}" th:attr="min=${reservation.getEndDateString()}"/>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body col-md-6">
-                    <div class="form-group">
-                        <label for="price" class="col-sm-4 col-form-label">Update Current Price: $<span th:text="${#numbers.formatDecimal(reservation.price, 0, 'COMMA', 2, 'POINT')}"></span></label>
-                        <div class="col-sm-4">
-                            <input required type="text" class="form-control" id="price"
-                                   data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': ${reservation.price}"
-                                   autocomplete="off" th:field="*{price}" th:maxlength="5"  th:placeholder="${reservation.price}" th:value="${reservation.price}"/>
                         </div>
                     </div>
                 </div>

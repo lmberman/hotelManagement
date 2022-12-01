@@ -21,9 +21,6 @@ public class ReservationUpdateForm {
     @NotNull
     private LocalDate endDate;
 
-    @NotNull
-    private double price;
-
     public Long getConfirmNum() {
         return confirmNum;
     }
@@ -54,13 +51,5 @@ public class ReservationUpdateForm {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

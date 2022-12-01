@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -25,11 +26,14 @@ public class HouseKeepingController {
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPT')")
     @GetMapping("/houseKeepingTasks")
-    public String getHouseKeepingTasksPage(Model model){
-        model.addAttribute("rooms", roomService.getAllRooms());
+    public String getHouseKeepingTasksPage(@RequestParam(required = false) boolean successfulAdd, Model model){
+        model.addAttribute("rooms", roomService.getRoomsWithNoPendingOrInProgressTasks());
         model.addAttribute("houseKeepTaskForm", new HouseKeepTaskForm());
         model.addAttribute("completedTasks",houseKeepTaskService.getAllCompleteTasks());
         model.addAttribute("inProgressTasks",houseKeepTaskService.getAllInCompleteTasks());
+        if(successfulAdd) {
+            model.addAttribute("updateSuccessMessage", true);
+        }
         return "houseKeepingTasksList";
     }
 
@@ -54,9 +58,12 @@ public class HouseKeepingController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_HOUSEKE')")
-    @GetMapping("/houseKeepTask/{id}/update")
-    public String updateTask(@PathVariable Long id, Model model) {
-        model.addAttribute("houseKeepTask",houseKeepTaskService.findById(id));
-        return "houseKeepTaskUpdate";
+    @PostMapping("/houseKeepTask/{id}/update")
+    public String updateTask(@PathVariable Long id, @Valid HouseKeepTaskUpdateForm houseKeepTaskUpdateForm, BindingResult bindingResult,
+                             Model model, HttpServletRequest request) {
+
+        houseKeepTaskService.updateHouseKeepTask(id, houseKeepTaskUpdateForm);
+        String targetUrl = request.getHeader("referer");
+        return "redirect:" + targetUrl;
     }
 }

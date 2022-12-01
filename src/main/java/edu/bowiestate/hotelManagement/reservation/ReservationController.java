@@ -86,10 +86,6 @@ public class ReservationController {
         }
 
         reservationService.updateReservation(reservationUpdateForm);
-        model.addAttribute("reservation",reservationService.findByConfirmationNum(reservationUpdateForm.getConfirmNum()));
-        model.addAttribute("reservationUpdateForm", reservationUpdateForm);
-        model.addAttribute("availableRooms", roomService.getAllAvailableRooms());
-        model.addAttribute("updateSuccessful", true);
         return "redirect:/reservation/"+ reservationUpdateForm.getConfirmNum() + "/update?updateSuccessful=true";
     }
 

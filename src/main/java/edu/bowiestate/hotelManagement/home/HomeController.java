@@ -1,7 +1,9 @@
 package edu.bowiestate.hotelManagement.home;
 
 import edu.bowiestate.hotelManagement.employee.Employee;
+import edu.bowiestate.hotelManagement.hotelDetails.HotelDetailsForm;
 import edu.bowiestate.hotelManagement.housekeep.HouseKeepTaskService;
+import edu.bowiestate.hotelManagement.housekeep.HouseKeepTaskUpdateForm;
 import edu.bowiestate.hotelManagement.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +46,7 @@ public class HomeController{
                     model.addAttribute("reservations",reservationService.findCurrentDaysReservations());
                     return "receptionHome";
                 } else {
+                    model.addAttribute("houseKeepTaskUpdateForm", new HouseKeepTaskUpdateForm());
                     model.addAttribute("ownedTasks", houseKeepTaskService.getTasksForUser(authentication.getName()));
                     model.addAttribute("unownedTasks", houseKeepTaskService.getAllUnownedTasks());
                     return "houseKeepingHome";

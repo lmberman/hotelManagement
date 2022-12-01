@@ -69,10 +69,20 @@ public class HouseKeepTaskService {
     }
 
     public List<HouseKeepTask> getTasksForUser(String user) {
-        return houseKeepRepository.findByEmployeeEmployeeId(Long.valueOf(user));
+        return houseKeepRepository.findByEmployeeEmployeeIdAndStatusNot(Long.valueOf(user), HouseKeepTask.TaskStatus.COMPLETE);
     }
 
     public List<HouseKeepTask> getAllUnownedTasks() {
         return houseKeepRepository.findByEmployeeNull();
+    }
+
+    public HouseKeepTask updateHouseKeepTask(Long taskId, HouseKeepTaskUpdateForm houseKeepTaskUpdateForm) {
+        HouseKeepTask houseKeepTask = findById(taskId);
+        if(houseKeepTask != null) {
+            houseKeepTask.setStatus(houseKeepTaskUpdateForm.getStatus());
+            houseKeepTask.setType(houseKeepTaskUpdateForm.getTaskType());
+            return houseKeepRepository.save(houseKeepTask);
+        }
+        return null;
     }
 }
