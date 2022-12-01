@@ -3,14 +3,15 @@ package edu.bowiestate.hotelManagement.housekeep;
 import edu.bowiestate.hotelManagement.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -34,7 +35,13 @@ public class HouseKeepingController {
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPT')")
     @PostMapping("/houseKeep/addTask")
-    public String addTaskToRoom(HouseKeepTaskForm houseKeepTaskForm, Model model) {
+    public String addTaskToRoom(@Valid HouseKeepTaskForm houseKeepTaskForm,
+                                BindingResult bindingResult, Model model, HttpServletRequest request) {
+        if(bindingResult.hasErrors()) {
+            model.addAllAttributes(bindingResult.getAllErrors());
+            String targetUrl = request.getHeader("referer");
+            return "redirect:" + targetUrl;
+        }
         houseKeepTaskService.saveHouseKeepTask(houseKeepTaskForm);
         return "redirect:/houseKeepingTasks";
     }

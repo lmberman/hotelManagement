@@ -3,11 +3,18 @@ package edu.bowiestate.hotelManagement.housekeep;
 import edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class HouseKeepTaskForm {
+
+    @NotNull
     private Long taskRoomNum;
+
+    @NotNull
     private TaskType taskType;
+
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadlineDate;
 

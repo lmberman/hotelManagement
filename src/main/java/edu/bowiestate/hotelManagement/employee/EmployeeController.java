@@ -31,7 +31,7 @@ public class EmployeeController {
     @GetMapping("/newEmployee/{employeeId}/credentials")
     public String getEmployeeCredentialsPage(@PathVariable Long employeeId, Model model) {
         EmployeeCredentialsForm form = new EmployeeCredentialsForm();
-        form.setEmployeeId(employeeId);
+        form.setEmployeeId(employeeId.toString());
         model.addAttribute("employeeCredentialsForm", form);
         return "employeeCredentialsPage";
     }

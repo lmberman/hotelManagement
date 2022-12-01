@@ -1,15 +1,28 @@
 package edu.bowiestate.hotelManagement.employee;
 
-public class EmployeeCredentialsForm {
-    private Long employeeId;
-    private String password;
-    private Employee.EmployeeRole employeeRole;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
+import edu.bowiestate.hotelManagement.employee.Employee.EmployeeRole;
+import javax.validation.constraints.NotNull;
 
-    public Long getEmployeeId() {
+public class EmployeeCredentialsForm {
+
+    @NotNull
+    @Length(min=8, max=8)
+    @NumberFormat(style= NumberFormat.Style.NUMBER)
+    private String employeeId;
+    @NotNull
+    @Length(min=8, max=15)
+    private String password;
+
+    @NotNull
+    private EmployeeRole employeeRole;
+
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -21,11 +34,11 @@ public class EmployeeCredentialsForm {
         this.password = password;
     }
 
-    public Employee.EmployeeRole getEmployeeRole() {
+    public EmployeeRole getEmployeeRole() {
         return employeeRole;
     }
 
-    public void setEmployeeRole(Employee.EmployeeRole employeeRole) {
+    public void setEmployeeRole(EmployeeRole employeeRole) {
         this.employeeRole = employeeRole;
     }
 }

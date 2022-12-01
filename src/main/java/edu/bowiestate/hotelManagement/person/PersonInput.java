@@ -1,24 +1,38 @@
 package edu.bowiestate.hotelManagement.person;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class PersonInput {
-    @Length(min = 1, max=50)
+    @NotNull
+    @Length(min = 2, max = 50)
     private String firstname;
+    @NotNull
     private char middle;
-    @Length(min = 2, max=50)
+    @NotNull
+    @Length(min = 2, max = 50)
     private String lastname;
-    @Length(min = 12, max=12)
+    @NotNull
+    @Length(min = 12, max = 12)
+    @Pattern(regexp = "(^$|[0-9]{3}-[0-9]{3}-[0-9]{4})")
     private String telephone;
 
-    @Length(min = 10, max=50)
+    @NotNull
+    @Length(min = 8, max = 50)
     private String address;
 
-    @Length(min = 4, max=50)
+    @NotNull
+    @Length(min = 3, max = 50)
     private String city;
-    @Length(min = 2, max=2)
+    @NotNull
+    @Length(min = 2, max = 2)
     private String state;
-    @Length(min = 5, max=5)
+    @NotNull
+    @Length(min = 5, max = 5)
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     private String zipcode;
 
     public String getFirstname() {

@@ -14,8 +14,6 @@ import java.util.Objects;
 @Table(name="EMPLOYEE")
 public class Employee {
     @Id
-    @TableGenerator(name = "Employee_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 5, allocationSize = 100)
-    @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Employee_Gen")
     @Column(name="EMPLOYEE_ID")
     private long employeeId;
 

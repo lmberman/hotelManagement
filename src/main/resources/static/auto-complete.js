@@ -26,6 +26,7 @@ function fillInAddress() {
   // Get each component of the address from the place details
   // and fill the corresponding field on the form.
   // street address
+  document.getElementById("street_number").value = "";
   for(var i=0; i<place.address_components.length; i++){
     var addressType = place.address_components[i].types[0];
     if (componentForm[addressType]) {
@@ -36,6 +37,7 @@ function fillInAddress() {
           } else {
            document.getElementById(addressType).value = val;
            document.getElementById(addressType).disabled = false;
+           document.getElementById(addressType).setAttribute('readonly', true);
           }
     }
   }

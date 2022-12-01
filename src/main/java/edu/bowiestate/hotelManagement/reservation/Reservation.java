@@ -6,14 +6,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name="RESERVATION")
 public class Reservation {
     @Id
-    @TableGenerator(name = "Reservation_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 1000, allocationSize = 100)
+    @TableGenerator(name = "Reservation_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 12348, allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Reservation_Gen")
     @Column(name="CONFIRM_NUM")
     private long confirmNum;

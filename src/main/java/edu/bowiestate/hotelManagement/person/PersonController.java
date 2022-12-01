@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class PersonController {
 
@@ -22,8 +24,8 @@ public class PersonController {
         }
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<Person> createNewPerson(PersonInput personInput) {
+    @PostMapping("/person/new")
+    public ResponseEntity<Person> createNewPerson(@Valid PersonInput personInput) {
         Person person = personService.saveNewPerson(personInput);
         if (person == null) {
             // error

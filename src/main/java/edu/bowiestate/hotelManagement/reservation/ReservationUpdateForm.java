@@ -2,20 +2,26 @@ package edu.bowiestate.hotelManagement.reservation;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ReservationUpdateForm {
 
+    @NotNull
     private Long confirmNum;
 
+    @NotNull
     private Long roomNum;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private LocalDate endDate;
 
+    @NotNull
     private double price;
 
     public Long getConfirmNum() {

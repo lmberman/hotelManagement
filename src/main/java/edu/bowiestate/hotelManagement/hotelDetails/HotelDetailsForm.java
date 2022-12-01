@@ -1,15 +1,34 @@
 package edu.bowiestate.hotelManagement.hotelDetails;
 
 import edu.bowiestate.hotelManagement.hotelDetails.HotelDetails.DaysOfOperation;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.NotNull;
 
 
 public class HotelDetailsForm {
+    @NotNull
     private DaysOfOperation startDayOfOperation;
+    @NotNull
     private DaysOfOperation endDayOfOperation;
+    @Length(min=4, max=4)
+    @NotNull
     private String startHourOfOperation;
+    @Length(min=4, max=4)
+    @NotNull
     private String endHourOfOperation;
+    @Length(min=4, max=4)
+    @NumberFormat(style= NumberFormat.Style.CURRENCY)
+    @NotNull
     private Double singleRoomPrice;
+    @Length(min=4, max=4)
+    @NumberFormat(style= NumberFormat.Style.CURRENCY)
+    @NotNull
     private Double doubleRoomPrice;
+    @Length(min=4, max=4)
+    @NumberFormat(style= NumberFormat.Style.CURRENCY)
+    @NotNull
     private Double suiteRoomPrice;
 
     public DaysOfOperation getStartDayOfOperation() {

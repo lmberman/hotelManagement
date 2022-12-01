@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -63,22 +64,33 @@ public class ReservationController {
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPT')")
     @GetMapping("/reservation/{id}/update")
-    public String getUpdatePage(@PathVariable long id, Model model){
+    public String getUpdatePage(@PathVariable long id,@RequestParam(required = false) boolean updateSuccessful, Model model){
+        ReservationUpdateForm form = new ReservationUpdateForm();
+        form.setConfirmNum(id);
         model.addAttribute("reservation",reservationService.findByConfirmationNum(id));
-        model.addAttribute("reservationUpdateForm", new ReservationUpdateForm());
+        model.addAttribute("reservationUpdateForm", form);
         model.addAttribute("availableRooms", roomService.getAllAvailableRooms());
+        if(updateSuccessful) {
+            model.addAttribute("updateSuccessful", true);
+        }
         return "reservationUpdate";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_RECEPT')")
     @PostMapping("/reservation/update")
-    public String updateReservation(@Valid ReservationUpdateForm reservationUpdateForm, BindingResult bindingResult, Model model){
+    public String updateReservation(@Valid ReservationUpdateForm reservationUpdateForm, BindingResult bindingResult, Model model, HttpServletRequest request){
+        if(bindingResult.hasErrors()) {
+            model.addAllAttributes(bindingResult.getAllErrors());
+            String targetUrl = request.getHeader("referer");
+            return "redirect:" + targetUrl;
+        }
+
         reservationService.updateReservation(reservationUpdateForm);
         model.addAttribute("reservation",reservationService.findByConfirmationNum(reservationUpdateForm.getConfirmNum()));
         model.addAttribute("reservationUpdateForm", reservationUpdateForm);
         model.addAttribute("availableRooms", roomService.getAllAvailableRooms());
         model.addAttribute("updateSuccessful", true);
-        return "redirect:/reservation/"+ reservationUpdateForm.getConfirmNum() + "/update";
+        return "redirect:/reservation/"+ reservationUpdateForm.getConfirmNum() + "/update?updateSuccessful=true";
     }
 
 }

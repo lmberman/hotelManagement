@@ -10,7 +10,7 @@ import java.util.Objects;
 @Table(name="PERSON")
 public class Person {
     @Id
-    @TableGenerator(name = "Person_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 5, allocationSize = 100)
+    @TableGenerator(name = "Person_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 10012352, allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE,  generator = "Person_Gen")
     @Column(name="id")
     private Long id;

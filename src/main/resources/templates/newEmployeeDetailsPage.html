@@ -63,7 +63,7 @@
                     <div class="input-group mb-3">
                         <div class="form-group">
                             <label class="control-label" for="middle"> Middle Initial: </label>
-                            <input required class="form-control" id="middle" type="text" th:field="*{middle}" name="middle" placeholder="L" maxlength="1"/>
+                            <input required class="form-control" id="middle" type="text" th:field="*{middle}" name="middle" maxlength="1"/>
                             <div class="alert alert-danger" th:if="${#fields.hasErrors('middle')}">
                                 <span><p th:errors="*{middle}"> Invalid Middle Initial </p></span>
                             </div>
@@ -118,7 +118,7 @@
                         <div class="input-group mb-3">
                             <div class="form-group">
                                 <label class="control-label" for="telephone"> Phone Number: </label>
-                                <input required class="form-control" id="telephone" type="text" th:field="*{telephone}" name="telephone" minlength="12" maxlength="12" placeholder="ex:301-852-6235"/>
+                                <input required class="form-control" id="telephone" type="tel" th:field="*{telephone}" name="telephone" minlength="12" maxlength="12" placeholder="ex:301-852-6235" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('telephone')}">
                                     <span><p th:errors="*{telephone}"> Invalid Phone Number </p></span>
                                 </div>

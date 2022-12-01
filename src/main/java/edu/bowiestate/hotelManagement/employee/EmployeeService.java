@@ -27,10 +27,10 @@ public class EmployeeService {
     }
 
     public Employee saveNewEmployee(EmployeeCredentialsForm employeeCredentialsForm) {
-        Person person = personService.findByPersonById(employeeCredentialsForm.getEmployeeId());
+        Person person = personService.findByPersonById(Long.valueOf(employeeCredentialsForm.getEmployeeId()));
         if(person != null) {
             Employee employee = new Employee();
-            employee.setEmployeeId(employee.getEmployeeId());
+            employee.setEmployeeId(person.getId());
             employee.setPassword(new BCryptPasswordEncoder(10).encode(employeeCredentialsForm.getPassword()));
             employee.setRole(employeeCredentialsForm.getEmployeeRole());
             employee.setPerson(person);

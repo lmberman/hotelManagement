@@ -28,14 +28,14 @@ public class HotelDetailsController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/hotelDetails/update")
     public String updateHotelDetails(@Valid HotelDetailsForm hotelDetailsForm, BindingResult bindingResult, Model model){
-        if(!bindingResult.hasErrors()) {
-           hotelDetailsService.updateHotelDetails(hotelDetailsForm);
-           HotelDetailsOutput currentHotelDetails = hotelDetailsService.findCurrentHotelDetails();
-           model.addAttribute("currentHotelDetails", currentHotelDetails);
-           model.addAttribute("updateSuccessful", true);
-           return "redirect:/hotelDetails";
+        if(bindingResult.hasErrors()) {
+            model.addAllAttributes(bindingResult.getAllErrors());
+            return "redirect:/hotelDetails";
         }
-
+        hotelDetailsService.updateHotelDetails(hotelDetailsForm);
+        HotelDetailsOutput currentHotelDetails = hotelDetailsService.findCurrentHotelDetails();
+        model.addAttribute("currentHotelDetails", currentHotelDetails);
+        model.addAttribute("updateSuccessful", true);
         return "redirect:/hotelDetails";
     }
 }
