@@ -3,6 +3,8 @@ package edu.bowiestate.hotelManagement;
 import edu.bowiestate.hotelManagement.housekeep.HouseKeepTask;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -97,4 +99,85 @@ public class HouseKeepingTest extends AbstractSeleniumTest {
             assert (updatedTasksId.equals(newOwnedTaskId));
         }
     }
+
+
+    @ValueSource(strings = {"Manager", "Receptionist"})
+    @ParameterizedTest
+    public void loadHouseKeepingTasksTab(String user) {
+        loginWithUser(user);
+        webDriver.findElement(By.id("houseKeepingTasksLink")).click();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
+        List<WebElement> cardSections = webDriver.findElements(By.className("card"));
+        assert(cardSections.size() == 4);
+        assert(cardSections.get(0)
+                .findElement(By.className("card-body"))
+                .findElement(By.tagName("h1"))
+                .getText()
+                .equalsIgnoreCase("Add HouseKeep Task To Room"));
+        assert(cardSections.get(1)
+                .findElement(By.className("card-body"))
+                .findElement(By.className("card-title"))
+                .getText()
+                .equalsIgnoreCase("HouseKeeping Tasks"));
+        assert(cardSections.get(2).findElement(By.className("card-title"))
+                .getText()
+                .equalsIgnoreCase("In-Progress Tasks"));
+        assert(cardSections.get(3).findElement(By.className("card-title"))
+                .getText()
+                .equalsIgnoreCase("Completed Tasks"));
+
+        assert(cardSections.get(0)
+                .findElement(By.id("add-housekeep-task-section"))
+                .findElement(By.id("add_task_to_room"))
+                .isDisplayed());
+        assert(cardSections.get(2)
+                .findElement(By.tagName("table"))
+                .isDisplayed());
+        assert(cardSections.get(3)
+                .findElement(By.tagName("table"))
+                .isDisplayed());
+    }
+
+    @ValueSource(strings = {"Manager", "Receptionist"})
+    @ParameterizedTest
+    public void addNewHouseKeepTask(String user) {
+        loginWithUser(user);
+        webDriver.findElement(By.id("houseKeepingTasksLink")).click();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
+        int inProgressTasksCount = webDriver.findElements(By.className("card"))
+                .get(2)
+                .findElement(By.tagName("table"))
+                .findElements(By.tagName("tr")).size();
+
+        WebElement newTaskForm = webDriver.findElement(By.id("add_task_to_room"));
+        WebElement taskRoomNumSelect = newTaskForm.findElement(By.id("taskRoomNum"));
+        WebElement taskTypeSelect = newTaskForm.findElement(By.id("taskType"));
+        WebElement deadlineDate = newTaskForm.findElement(By.id("deadlineDate"));
+        WebElement submitButton = newTaskForm.findElement(By.tagName("button"));
+
+        taskRoomNumSelect.findElements(By.tagName("option")).get(1).click();
+        taskTypeSelect.findElements(By.tagName("option")).get(1).click();
+        deadlineDate.sendKeys("12-06-2022");
+
+        submitButton.click();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        assert(webDriver.findElement(By.id("updateSuccessMessage")).isDisplayed());
+
+        List<WebElement> inProgressTasks = webDriver.findElements(By.className("card"))
+                .get(2)
+                .findElement(By.tagName("table"))
+                .findElements(By.tagName("tr"));
+        int inProgressTasksNewSize = inProgressTasks.size();
+
+        assert(inProgressTasksNewSize == inProgressTasksCount+1);
+        List<WebElement> lastTaskData = inProgressTasks
+                .get(inProgressTasksNewSize-1)
+                .findElements(By.tagName("td"));
+
+        assert(lastTaskData
+                .get(0)
+                .getText()
+                .equalsIgnoreCase("Pending Ownership"));
+    }
+
 }

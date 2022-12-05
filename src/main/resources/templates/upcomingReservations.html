@@ -75,8 +75,6 @@
                                 <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).OPEN}">
                                     <a th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
                                     <br>
-                                    <a th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
-                                    <br>
                                     <a th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
                                     <br>
                                 </td>

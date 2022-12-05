@@ -32,7 +32,7 @@ public class HouseKeepingController {
         model.addAttribute("completedTasks",houseKeepTaskService.getAllCompleteTasks());
         model.addAttribute("inProgressTasks",houseKeepTaskService.getAllInCompleteTasks());
         if(successfulAdd) {
-            model.addAttribute("updateSuccessMessage", true);
+            model.addAttribute("updateSuccessful", true);
         }
         return "houseKeepingTasksList";
     }
@@ -47,7 +47,7 @@ public class HouseKeepingController {
             return "redirect:" + targetUrl;
         }
         houseKeepTaskService.saveHouseKeepTask(houseKeepTaskForm);
-        return "redirect:/houseKeepingTasks";
+        return "redirect:/houseKeepingTasks?successfulAdd=true";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_HOUSEKE')")
