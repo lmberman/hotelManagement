@@ -2,8 +2,7 @@ package edu.bowiestate.hotelManagement;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,10 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @SpringBootTest
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbstractSeleniumTest {
 
     @Autowired
@@ -25,6 +26,14 @@ public class AbstractSeleniumTest {
     private Map<String, Credentials> credentials;
 
     private Map<String, String> expectedHomeScreenName;
+
+    protected String managerUser = "Manager";
+    protected String receptionist = "Receptionist";
+    protected String houseKeepUser = "HouseKeep";
+
+    protected Set<String> managerTabs;
+    protected Set<String> receptionistTabs;
+    protected Set<String> houseKeepTabs;
 
     @BeforeEach
     public void beforeTests() {
@@ -40,6 +49,32 @@ public class AbstractSeleniumTest {
         expectedHomeScreenName.put("Manager", "Management Home");
         expectedHomeScreenName.put("Receptionist", "Reception Home");
         expectedHomeScreenName.put("HouseKeep", "House Keeping Home");
+
+        managerTabs = new HashSet<>() {
+            {
+                add("Home");
+                add("Manage Hotel Details");
+                add("Vacancy List");
+                add("Current Reservations");
+                add("Upcoming Reservations");
+                add("House-Keeping Tasks");
+                add("Status Reports");
+                add("Add Employee");
+                add("Logout");
+            }};
+        receptionistTabs = new HashSet<>() {
+            {
+                add("Home");
+                add("Current Reservations");
+                add("Upcoming Reservations");
+                add("House-Keeping Tasks");
+                add("Logout");
+            }};
+        houseKeepTabs = new HashSet<>() {
+            {
+                add("Home");
+                add("Logout");
+            }};
     }
     @After
     public void afterTests(){
@@ -72,4 +107,21 @@ public class AbstractSeleniumTest {
             assert(title.getText().equals(expectedHomePage));
         }
     }
+
+    public Set<String> getExpectedTabsForUser(String user) {
+        if(user.equalsIgnoreCase("Manager")) {
+            return managerTabs;
+        } else if (user.equalsIgnoreCase("Receptionist")) {
+            return receptionistTabs;
+        } else if (user.equalsIgnoreCase("HouseKeep")){
+            return houseKeepTabs;
+        }
+        return null;
+    }
+
+    @After
+    public void after() {
+        webDriver.close();
+    }
+
 }

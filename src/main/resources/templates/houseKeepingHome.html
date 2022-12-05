@@ -22,91 +22,85 @@
     </div>
 </nav>
 <div class="card">
-    <div class="card-body">
-        <h1 class="card-title text-center text-bold"> House Keeping Home</h1>
-    </div>
+    <h1 class="card-title text-center text-bold"> House Keeping Home</h1>
     <div id="Current_Employee_Tasks" class="card-body">
+        <h2> Your Open Tasks </h2>
         <div>
-            <h2> Your Open Tasks </h2>
-            <div>
-                <div class="table-responsive text-center">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col"> Task Id </th>
-                            <th scope="col"> Owner </th>
-                            <th scope="col"> Room # </th>
-                            <th scope="col"> Deadline Date </th>
-                            <th scope="col"> Type </th>
-                            <th scope="col"> Status </th>
-                            <th scope="col"> Action </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="houseKeepTask: ${ownedTasks}">
-                            <form id="update_owned_task" th:action="|/houseKeepTask/${houseKeepTask.taskId}/update|" method="post" th:object="${houseKeepTaskUpdateForm}" autocomplete="off" >
-                                <td th:text="${houseKeepTask.taskId}"></td>
-                                <td th:text="${houseKeepTask.getEmployeeName()}"></td>
-                                <td th:text="${houseKeepTask.room.roomNum}"></td>
-                                <td th:text="${houseKeepTask.deadlineDate}"></td>
-                                <td>
-                                    <select class="form-control selectpicker" th:field="*{taskType}" id="taskType">
-                                        <option selected="selected" th:value="${houseKeepTask.type}" th:text="${houseKeepTask.type}"></option>
-                                        <option th:each="taskType : ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskType).values()}"
-                                                th:if="${taskType} != ${houseKeepTask.type}"
-                                                th:value="${taskType}"
-                                                th:text="${taskType}">
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control selectpicker" th:field="*{status}" id="status">
-                                    <option selected="selected" th:value="${houseKeepTask.status}" th:text="${houseKeepTask.status}"></option>
-                                    <option th:each="taskStatus : ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskStatus).values()}"
-                                            th:if="${taskStatus} != ${houseKeepTask.status} and ${taskStatus} != ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskStatus).PENDING}"
-                                            th:value="${taskStatus}"
-                                            th:text="${taskStatus}">
+            <div class="table-responsive text-center">
+                <table id="yourTasks" class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"> Task Id </th>
+                        <th scope="col"> Owner </th>
+                        <th scope="col"> Room # </th>
+                        <th scope="col"> Deadline Date </th>
+                        <th scope="col"> Type </th>
+                        <th scope="col"> Status </th>
+                        <th scope="col"> Action </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="houseKeepTask: ${ownedTasks}">
+                        <form id="update_owned_task" th:action="|/houseKeepTask/${houseKeepTask.taskId}/update|" method="post" th:object="${houseKeepTaskUpdateForm}" autocomplete="off" >
+                            <td th:text="${houseKeepTask.taskId}"></td>
+                            <td th:text="${houseKeepTask.getEmployeeName()}"></td>
+                            <td th:text="${houseKeepTask.room.roomNum}"></td>
+                            <td th:text="${houseKeepTask.deadlineDate}"></td>
+                            <td>
+                                <select class="form-control selectpicker" th:field="*{taskType}" id="taskType">
+                                    <option selected="selected" th:value="${houseKeepTask.type}" th:text="${houseKeepTask.type}"></option>
+                                    <option th:each="taskType : ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskType).values()}"
+                                            th:if="${taskType} != ${houseKeepTask.type}"
+                                            th:value="${taskType}"
+                                            th:text="${taskType}">
                                     </option>
-                                </select> </td>
-                                <td> <button type="submit" class="btn btn-primary" value="Update"/> Update Task </button> </td>
-                            </form>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control selectpicker" th:field="*{status}" id="status">
+                                <option selected="selected" th:value="${houseKeepTask.status}" th:text="${houseKeepTask.status}"></option>
+                                <option th:each="taskStatus : ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskStatus).values()}"
+                                        th:if="${taskStatus} != ${houseKeepTask.status} and ${taskStatus} != ${T(edu.bowiestate.hotelManagement.housekeep.HouseKeepTask.TaskStatus).PENDING}"
+                                        th:value="${taskStatus}"
+                                        th:text="${taskStatus}">
+                                </option>
+                            </select> </td>
+                            <td> <button type="submit" class="btn btn-primary" value="Update"/> Update Task </button> </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <div id="UnOwned_Tasks" class="card-body">
+        <h2> Unowned Tasks </h2>
         <div>
-            <h2> Unowned Tasks </h2>
-            <div>
-                <div class="table-responsive text-center">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col"> Task Id </th>
-                            <th scope="col"> Owner </th>
-                            <th scope="col"> Room # </th>
-                            <th scope="col"> Deadline Date </th>
-                            <th scope="col"> Type </th>
-                            <th scope="col"> Status </th>
-                            <th scope="col"> Action </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="houseKeepTask: ${unownedTasks}">
-                            <td th:text="${houseKeepTask.taskId}"> Task Id</td>
-                            <td th:text="${houseKeepTask.getEmployeeName()}"> Firstname </td>
-                            <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>
-                            <td th:text="${houseKeepTask.deadlineDate}"> Deadline Date </td>
-                            <td th:text="${houseKeepTask.type}"> Type </td>
-                            <td th:text="${houseKeepTask.status}"> Status </td>
-                            <td> <a th:href="|/houseKeepTask/${houseKeepTask.taskId}/claim|"> Claim </a> </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-responsive text-center">
+                <table id="unOwnedTasks" class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"> Task Id </th>
+                        <th scope="col"> Owner </th>
+                        <th scope="col"> Room # </th>
+                        <th scope="col"> Deadline Date </th>
+                        <th scope="col"> Type </th>
+                        <th scope="col"> Status </th>
+                        <th scope="col"> Action </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="houseKeepTask: ${unownedTasks}">
+                        <td th:text="${houseKeepTask.taskId}"> Task Id</td>
+                        <td th:text="${houseKeepTask.getEmployeeName()}"> Firstname </td>
+                        <td th:text="${houseKeepTask.room.roomNum}"> Room Num  </td>
+                        <td th:text="${houseKeepTask.deadlineDate}"> Deadline Date </td>
+                        <td th:text="${houseKeepTask.type}"> Type </td>
+                        <td th:text="${houseKeepTask.status}"> Status </td>
+                        <td> <a id="claimTask" th:href="|/houseKeepTask/${houseKeepTask.taskId}/claim|"> Claim </a> </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
