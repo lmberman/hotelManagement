@@ -31,9 +31,6 @@
                 <a id="houseKeepingTasksLink" class="nav-link" th:href="@{/houseKeepingTasks}"> House-Keeping Tasks </a>
             </li>
             <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
-                <a id="statusReportsLink" class="nav-link" th:href="@{/statusReports}"> Status Reports </a>
-            </li>
-            <li sec:authorize="hasAuthority('ROLE_MANAGER')" class="nav-item">
                 <a id="newEmployeeLink" class="nav-link" th:href="@{/newEmployee}"> Add Employee </a>
             </li>
             <li class="nav-item">
