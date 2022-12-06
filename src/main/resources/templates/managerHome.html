@@ -68,18 +68,18 @@
                     <td th:text="${reservation.customer.person.lastname}"> Lastname  </td>
                     <td th:text="${reservation.room.type}"> Room Type </td>
                     <td th:text="${reservation.room.roomNum}"> Room Number </td>
-                    <td th:text="${reservation.startDate}"> Start Date </td>
-                    <td th:text="${reservation.endDate}"> End Date </td>
+                    <td th:text="${#dates.format(reservation.startDate, 'MM-dd-yyyy')}"> Start Date </td>
+                    <td th:text="${#dates.format(reservation.endDate, 'MM-dd-yyyy')}"> End Date </td>
                     <td th:text="${reservation.status}"> Status </td>
                     <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).OPEN}">
-                        <a th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
+                        <a id="checkIn" th:href="|/reservation/${reservation.confirmNum}/checkIn|"> CheckIn </a>
                         <br>
-                        <a th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
+                        <a id="cancel" th:href="|/reservation/${reservation.confirmNum}/cancel|"> Cancel </a>
                     </td>
                     <td th:if="${reservation.status} == ${T(edu.bowiestate.hotelManagement.reservation.Reservation.ReservationStatus).IN_PROGRESS}">
-                        <a th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
+                        <a id="update" th:href="|/reservation/${reservation.confirmNum}/update|"> Update </a>
                         <br>
-                        <a th:href="|/reservation/${reservation.confirmNum}/checkout|"> Checkout </a>
+                        <a id="checkout" th:href="|/reservation/${reservation.confirmNum}/checkout|"> Checkout </a>
                     </td>
                 </tr>
                 </tbody>

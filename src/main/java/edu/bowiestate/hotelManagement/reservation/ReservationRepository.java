@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -13,5 +14,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             " and status in ('OPEN','IN_PROGRESS') order by start_date ")
     public List<Reservation> findByTodaysReservations(@Param("currentDay") LocalDate currentDay);
 
-    public List<Reservation> findByStartDateGreaterThanAndStatusOrderByStartDate(LocalDate date, Reservation.ReservationStatus status);
+    public List<Reservation> findByStartDateGreaterThanAndStatusOrderByStartDate(Date date, Reservation.ReservationStatus status);
 }

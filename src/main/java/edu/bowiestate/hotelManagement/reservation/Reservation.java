@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -27,13 +28,13 @@ public class Reservation {
     @JoinColumn(name = "ROOM_NUM", nullable = false)
     private Room room;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Column(name="START_DATE")
-    private LocalDate startDate;
+    private Date startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Column(name="END_DATE")
-    private LocalDate endDate;
+    private Date endDate;
 
     @Column(name="PRICE_LOCKED")
     private char priceLocked;
@@ -72,27 +73,27 @@ public class Reservation {
         this.room = room;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
     public String getStartDateString() {
-        return DateTimeFormatter.ISO_DATE.format(startDate);
+        return DateTimeFormatter.ISO_DATE.format(startDate.toInstant());
     }
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     public String getEndDateString() {
-        return DateTimeFormatter.ISO_DATE.format(endDate);
+        return DateTimeFormatter.ISO_DATE.format(endDate.toInstant());
     }
 
     public char isPriceLocked() {
@@ -127,7 +128,7 @@ public class Reservation {
         this.status = status;
     }
 
-    enum ReservationStatus {
+    public enum ReservationStatus {
         OPEN, IN_PROGRESS, CLOSED, CANCELLED
     }
 

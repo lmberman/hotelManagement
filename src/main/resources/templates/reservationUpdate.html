@@ -49,7 +49,7 @@
     <div id="updateSuccessMessage" th:if="${updateSuccessful}">
         Update Successful
     </div>
-    <div id="hotelDetails" class="card-body">
+    <div id="reservationDetails" class="card-body">
         <form th:action="@{/reservation/update}" method="post" th:object="${reservationUpdateForm}" autocomplete="off" >
             <div class="card-body col-lg-12">
                 <div class="form-group mb-3">
@@ -76,7 +76,7 @@
                         <div class="col-sm-8">
                             <label for="startDate" class="col-sm-4 col-form-label"> Update Start Date </label>
                             <div class="input-group date">
-                                <input required type="date" class="form-control datepicker" th:field="*{startDate}" id="startDate" th:value="${reservation.startDate}" th:attr="min=${reservation.getStartDateString()}"/>
+                                <input required type="date" class="form-control datepicker" th:field="*{startDate}" id="startDate" th:value="${reservation.startDate}" th:attr="min=${reservation.startDate}"/>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <div class="col-sm-8">
                             <label for="endDate" class="col-sm-4 col-form-label"> Update End Date </label>
                             <div class="input-group date">
-                                <input required type="date" class="form-control datepicker" th:field="*{endDate}" id="endDate" th:value="${reservation.endDate}" th:attr="min=${reservation.getEndDateString()}"/>
+                                <input required type="date" class="form-control datepicker" th:field="*{endDate}" id="endDate" th:value="${reservation.endDate}" th:attr="min=${reservation.endDate}"/>
                             </div>
                         </div>
                     </div>

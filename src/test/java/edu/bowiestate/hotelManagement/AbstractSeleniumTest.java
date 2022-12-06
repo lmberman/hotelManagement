@@ -1,9 +1,8 @@
 package edu.bowiestate.hotelManagement;
 
 import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -119,7 +118,7 @@ public class AbstractSeleniumTest {
         return null;
     }
 
-    @After
+    @AfterEach
     public void after() {
         webDriver.close();
     }

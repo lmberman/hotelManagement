@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -18,10 +20,13 @@ public class HotelDetailsController {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/hotelDetails")
-    public String getHotelDetails(Model model){
+    public String getHotelDetails(@RequestParam(required = false) boolean successfulUpdate, Model model){
         HotelDetailsOutput currentHotelDetails = hotelDetailsService.findCurrentHotelDetails();
         model.addAttribute("currentHotelDetails", currentHotelDetails);
         model.addAttribute("hotelDetailsForm", new HotelDetailsForm());
+        if(successfulUpdate) {
+            model.addAttribute("updateSuccessful", true);
+        }
         return "manageHotelDetails";
     }
 
@@ -36,6 +41,6 @@ public class HotelDetailsController {
         HotelDetailsOutput currentHotelDetails = hotelDetailsService.findCurrentHotelDetails();
         model.addAttribute("currentHotelDetails", currentHotelDetails);
         model.addAttribute("updateSuccessful", true);
-        return "redirect:/hotelDetails";
+        return "redirect:/hotelDetails?successfulUpdate=true";
     }
 }

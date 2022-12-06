@@ -155,8 +155,10 @@ public class HouseKeepingTest extends AbstractSeleniumTest {
         WebElement deadlineDate = newTaskForm.findElement(By.id("deadlineDate"));
         WebElement submitButton = newTaskForm.findElement(By.tagName("button"));
 
-        taskRoomNumSelect.findElements(By.tagName("option")).get(1).click();
-        taskTypeSelect.findElements(By.tagName("option")).get(1).click();
+        List<WebElement> roomOptions = taskRoomNumSelect.findElements(By.tagName("option"));
+        roomOptions.get(roomOptions.size()-1).click();
+        List<WebElement> taskTypeOptions = taskTypeSelect.findElements(By.tagName("option"));
+        taskTypeOptions.get(taskTypeOptions.size()-1).click();
         deadlineDate.sendKeys("12-06-2022");
 
         submitButton.click();

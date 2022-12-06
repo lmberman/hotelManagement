@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class ReservationService {
     }
 
     public List<Reservation> findFutureReservations() {
-        return reservationRepository.findByStartDateGreaterThanAndStatusOrderByStartDate(LocalDate.now(), Reservation.ReservationStatus.OPEN);
+        return reservationRepository.findByStartDateGreaterThanAndStatusOrderByStartDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), Reservation.ReservationStatus.OPEN);
     }
 
     public Reservation findByConfirmationNum(Long confirmId) {
