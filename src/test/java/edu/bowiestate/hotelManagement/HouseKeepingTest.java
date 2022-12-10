@@ -68,7 +68,7 @@ public class HouseKeepingTest extends AbstractSeleniumTest {
     }
 
     @Test
-    public void claimTask() {
+    public void claimTask() throws InterruptedException {
         loginWithUser("HouseKeep");
         List<WebElement> tasks = webDriver.findElement(By.id("yourTasks"))
                 .findElement(By.tagName("tbody"))
@@ -83,6 +83,7 @@ public class HouseKeepingTest extends AbstractSeleniumTest {
             int unOwnedTaskListSizeBefore = unOwnedTasks.size();
 
             WebElement claimButton = task.findElement(By.id("claimTask"));
+            Thread.sleep(2000);
             claimButton.click();
 
             List<WebElement> newOwnedTaskList = webDriver.findElement(By.id("yourTasks"))
@@ -156,30 +157,33 @@ public class HouseKeepingTest extends AbstractSeleniumTest {
         WebElement submitButton = newTaskForm.findElement(By.tagName("button"));
 
         List<WebElement> roomOptions = taskRoomNumSelect.findElements(By.tagName("option"));
-        roomOptions.get(roomOptions.size()-1).click();
-        List<WebElement> taskTypeOptions = taskTypeSelect.findElements(By.tagName("option"));
-        taskTypeOptions.get(taskTypeOptions.size()-1).click();
-        deadlineDate.sendKeys("12-06-2022");
+        if(roomOptions.size() >= 1) {
+            roomOptions.get(roomOptions.size()-1).click();
+            List<WebElement> taskTypeOptions = taskTypeSelect.findElements(By.tagName("option"));
+            taskTypeOptions.get(taskTypeOptions.size()-1).click();
+            deadlineDate.sendKeys("12-20-2022");
 
-        submitButton.click();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        assert(webDriver.findElement(By.id("updateSuccessMessage")).isDisplayed());
+            submitButton.click();
+            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            assert(webDriver.findElement(By.id("updateSuccessMessage")).isDisplayed());
 
-        List<WebElement> inProgressTasks = webDriver.findElements(By.className("card"))
-                .get(2)
-                .findElement(By.tagName("table"))
-                .findElements(By.tagName("tr"));
-        int inProgressTasksNewSize = inProgressTasks.size();
+            List<WebElement> inProgressTasks = webDriver.findElements(By.className("card"))
+                    .get(2)
+                    .findElement(By.tagName("table"))
+                    .findElements(By.tagName("tr"));
+            int inProgressTasksNewSize = inProgressTasks.size();
 
-        assert(inProgressTasksNewSize == inProgressTasksCount+1);
-        List<WebElement> lastTaskData = inProgressTasks
-                .get(inProgressTasksNewSize-1)
-                .findElements(By.tagName("td"));
+            assert(inProgressTasksNewSize == inProgressTasksCount+1);
+            List<WebElement> lastTaskData = inProgressTasks
+                    .get(inProgressTasksNewSize-1)
+                    .findElements(By.tagName("td"));
 
-        assert(lastTaskData
-                .get(0)
-                .getText()
-                .equalsIgnoreCase("Pending Ownership"));
+            assert(lastTaskData
+                    .get(0)
+                    .getText()
+                    .equalsIgnoreCase("Pending Ownership"));
+        }
+
     }
 
 }

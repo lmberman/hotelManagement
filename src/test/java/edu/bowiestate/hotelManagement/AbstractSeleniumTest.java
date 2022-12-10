@@ -57,7 +57,6 @@ public class AbstractSeleniumTest {
                 add("Current Reservations");
                 add("Upcoming Reservations");
                 add("House-Keeping Tasks");
-                add("Status Reports");
                 add("Add Employee");
                 add("Logout");
             }};

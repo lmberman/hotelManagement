@@ -8,11 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ReadOnlyPagesTest extends AbstractSeleniumTest {
 
-    @ValueSource(strings = {"Manager", "Receptionist"})
+    @ValueSource(strings = {"Manager"})
     @ParameterizedTest
-    public void vacancyListLoads(String credType) {
+    public void vacancyListLoads(String credType) throws InterruptedException {
         loginWithUser(credType);
-        assert (webDriver.findElement(By.id("unoccupied-rooms-list")).isDisplayed());
-        assert (webDriver.findElement(By.id("occupied-rooms-list")).isDisplayed());
+        webDriver.findElement(By.id("vacancyListLink")).click();
+        Thread.sleep(100);
+        assert (webDriver.findElement(By.id("unoccupied-rooms-List")).isDisplayed());
+        assert (webDriver.findElement(By.id("occupied-rooms-List")).isDisplayed());
     }
 }
